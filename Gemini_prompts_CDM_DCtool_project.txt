@@ -1,0 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+The first section of CDM database is the MILESTONES schema, which has multiple domains related to career planning within Indian context. These domains are: Names of industries and their main branches, Academic discipline groups and their branches (referred to as Disciplines), Career positions (marked as entry-level, junior level, mid-level, senior level and executive level) in each industry branch, Names of different courses (high school courses such as 10+2 with PCB, PCM, diploma and ITI courses, bachelor's degree standard and professional courses, Master's degree general and professional courses, Post-graduate and Research level courses) in different academic disciplines, Academic levels of each course, subjects taught in each course, skills learnt in each course, skills learnt in each course and in each career role, Certifications and Entrance Exams. 
+The Industry branches are linked to Disciplines in a separate relationship table, in which the disciplines which are part of main domain of the industry or industry branch are marked as mainstream discipline. The courses are of two types: Course General (Course G) and Course Specific (Course S). Course G refers to general name of an academic course, while Course S is the specific course of type Course G which are taught in Indian institutions, thus making a Course S record tied to a specific institution. The institutions can belong to multiple categories. There are more than 30 different categories of institutions (State University, Central University, Private University, Constituent College (of State University), Autonomous College (University-affiliated), Deemed University, College, School, Indian Institute of Technology, National Institute of Technology, Central Open University, Private EdTech company and so on). Institutions and Course S can have rankings on Course Groups. Each Course G has two Course Groups (something similar to keywords or tags), one can be on Academic level + Stream (Science/Arts/Commerce/Engineering etc.) and the second course group can be on domain. Each Course S is linked to entrance exams tables and admission criteria tables.
+Out of the domains mentioned above, four of them are recognized as career milestones, or simply milestones, and they are courses, career positions, certifications and entrance exams. The milestones signify the major objectives in one's career pathway, right from where one is in one's career, up to the career goal one wants to achieve.  There can be multiple alternative routes to achieve a career goal, and each of those routes would have some distinct (or shared) milestones in them. The Qued platform                         
+
+The second section of the CDM database is the REQUIREMENTS schema. Here we have six different types of requirements, represented by six tables, storing the prerequisites or admission criteria for different milestones.
+
+

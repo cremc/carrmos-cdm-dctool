@@ -1,0 +1,537 @@
+
+1. ACADEMICS domain tables:
+
+academic_level table:
+academic_level_id (PK)
+name
+description
+min_years_to_complete
+average_years_to_complete
+max_years_to_complete
+prerequisite_academic_level_ID
+order
+
+stream :
+stream_id (PK)
+name
+description
+equivalent_names
+parent_stream_id
+
+discipline_group :
+discipline_group_id (PK)
+name
+description
+stream_id
+
+
+discipline :
+discipline_id (PK)
+name
+description
+discipline_group_id
+
+
+course_general :
+course_general_id (PK)
+academic_level_id
+name
+description  (Course detailed description)
+course_alternate_names
+course_type
+course_duration_months
+course_description_for_rigour
+course_tuition_cost_inr
+course_description_for_career
+
+core_subject :
+core_subject_id (PK)
+name
+description
+
+entrance_test :
+entrance_test_id (PK)
+name
+description
+full_name
+test_objective
+test_cost_description
+test_version
+test_objective_type (enum)
+test_curriculum_description
+test_rigour_description
+test_preparation_advice
+score_reference_id
+score_system_description
+conducted_by_institution
+year_established
+url
+
+course_general_core_subject :
+course_general_core_subject_id (PK)
+course_general_id
+core_subject_id
+
+course_general_discipline :
+course_general_discipline_id (PK)
+course_general_id
+discipline_id
+discipline_group_id
+
+
+2. CAREER domain tables:
+
+industry_sector :
+industry_sector_id (PK)
+name
+description
+
+industry :
+industry_id (PK)
+industry_name
+description
+equivalent_names
+industry_sector_id
+
+industry_branch :
+industry_branch_id (PK)
+name
+description
+equivalent_names
+industry_id
+
+career_position :
+career_position_id (PK)
+name
+short_description
+long_description
+salary_range
+industry_branch_id
+industry_id
+prospective_employers
+sedantariness_expected
+physical_load_expected
+mental_load_expected
+analytical_load_expected
+amount_of_travel_expected
+amount_of_sales_effort_expected 
+salary_potential
+lifestyle_potential
+career_growth_potential
+job_stability_potential
+travel_potential
+wlb_potential
+settling_down_abroad_potential
+networking_potential
+data_source
+
+skill_category :
+skill_category_id (PK)
+name
+description
+
+skill_subcategory :
+skill_subcategory_id (PK)
+name
+description
+skill_category_id
+skill_class
+can_be_a_vocation
+
+score_reference :
+score_reference_id (PK)
+name
+description
+score_min_value (for Numeric scales)
+score_max_value (for Numeric scales)
+score_min_max_type (percentage, percentile, absolute)
+range1 (Min value for Range-of-5 scales)
+range2  (for Range-of-5 scales)
+range3 (for Range-of-5 scales)
+range4 (for Range-of-5 scales)
+range 5 (Max value for Range-of-5 scales)
+level1 (Min for for Range-of-3 scales)
+level2 (for Range-of-3 scales)
+level3 (for Range-of-3 scales)
+
+
+skill_subcategory_career_position :
+skill_subcategory_career_position_id (PK)
+skill_subcategory_id
+career_position_id
+name
+description
+score_reference_id
+skill_level
+
+
+3. COURSE domain tables:
+
+course_specific :
+course_specific_id (PK)
+name
+description
+institution_id
+course_general_id
+admission_criteria_description
+AAA__ID
+course_type
+course_tuition_cost_INR
+degree_or_certificate_awarded
+certified_by_institution_id
+conducted_by_institution_id
+course_duration_days
+course_duration_weeks
+course_duration_months
+course_duration_academic_sessions
+course_preparation_advice
+course_description_for_rigour
+activeness_expected (Unknown;None; Low;Mid;High)
+physical_load_expected
+mental_load_expected
+analytical_load_expected
+
+target_student_type :
+target_student_type_id (PK)
+name
+description
+
+attendance_type :
+attendance_type_id (PK)
+name
+description
+
+course_specific_target_student_type :
+course_specific_target_student_type_id (PK)
+course_specific_id
+target_student_type_id
+
+
+course_specific_attendance_type :
+course_specific_attendance_type_id (PK)
+course_specific_id
+attendance_type_id
+
+
+course_specific_ranking :
+course_specific_ranking_id (PK)
+course_specific_id
+rank
+year_of_rank
+description
+ranking_source_id
+
+course_specific_expense :
+course_specific_expense_id (PK)
+name
+description
+course_specific_id
+expense_type_id
+frequency
+currency_id
+amount
+
+ 
+4. INSTITUTION domain tables:
+institution :
+institution_id (PK)
+name
+short_description
+long_description
+popular_names
+parent_institution_id   (can be 0 (fornull))
+year_established
+url
+location
+
+institution_category :
+institution_category_id (PK)
+name
+popular_name
+description
+country_id
+
+
+association_accreditation_affiliation (alias aaa) :
+aaa_id (PK)
+name
+description
+aaa_type_id
+country_id
+
+
+
+5. REQUIREMENT domain tables:
+
+grouping_reference :
+requirement_group_id (PK)
+Grouping_for
+Milestone_type
+Academic_Requirement_ID
+
+
+milestone_academic_requirement :
+milestone_academic_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_academic_level_id
+prerequisite_course_general_id
+prerequisite_stream_id
+prerequisite_discipline_group_id
+prerequisite_discipline_id
+prerequisite_score_reference_id
+prerequisite_score_value_min
+requirement_group_id
+
+
+milestone_workex_requirement :
+milestone_workex_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_career_position_id
+prerequisite_industry_id
+prerequisite_industry_branch_id
+prerequisite_workex_min_duration_yrs
+requirement_group_id
+dependency_type
+
+
+milestone_skill_requirement :
+milestone_skill_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_skill_category_id
+prerequisite_skill_subcategory_id
+score_reference_id
+prerequisite_skill_level (Low; Medium;High)
+requirement_group_id
+dependency_type
+
+
+milestone_entrance_requirement :
+milestone_entrance_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_entrance_test_id
+prerequisite_score_value_min
+requirement_group_id
+dependency_type
+
+
+milestone_certification_requirement :
+milestone_certification_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_certification_id  (course_specific_id)
+prerequisite_score_value_min
+requirement_group_id
+dependency_type
+
+
+milestone_other_requirement :
+milestone_other_requirement_id (PK)
+name
+description
+calling_milestone_id
+calling_milestone_type
+prerequisite_description
+dependency_type
+
+
+
+
+6. RANKING domain tables:
+
+ranking_source :
+ranking_source_id (PK)
+name
+description
+year_of_survey
+target_type
+target_name
+target_id
+country_id
+year_established
+ranking_type
+
+7. GENERAL domain tables:
+
+country_group :
+country_group_id
+name
+description
+
+
+country :
+country_id
+name
+region
+continent
+country_dialing_code
+
+province_or_state :
+province_or_state_id
+name
+description
+country_id
+
+
+city :
+city_id
+name
+description
+province_or_state_id
+google_map_url
+latitude
+longitude
+
+country_country_group :
+country_country_group_id
+name
+description
+country_id
+country_group_id
+
+
+location :
+location_id
+location_name
+location_description
+location_type (enum)
+entity_id
+entity_type
+address_line_1 
+address_line_2
+address_line_3
+city_id
+province_or_state_id
+country_id
+postal_code
+location_urbanage
+latitude
+longitude 
+google_map_url
+location_notes
+
+
+contact_details :
+contact_details_id
+description
+isd_code
+phone_area_code
+phone_number1
+phone_type1
+phone_number2
+phone_type2
+contact_hours
+time_zone_id
+working_days
+email1
+email_type1
+email2
+email_type2
+email3
+email_type3
+email4
+email_type4
+url
+linked_in_address
+github_address
+facebook_page
+instagram_page
+contact_notes
+
+
+FINANCE domain tables:
+
+expense_type :
+expense_type_id (PK)
+name
+description
+
+financial_aid_type : 
+financial_aid_type_id (PK)
+name
+description
+
+currency :
+currency_id (PK)
+name
+description
+currency_code
+country_id
+
+
+
+
+MULTI-DOMAIN TABLES:
+
+discipline_industry_branch :
+discipline_industry_branch_id (PK)
+discipline_id
+industry_branch_id
+name
+description
+is_main_stream_discipline_branch
+
+
+
+career_position_core_subject:
+career_position_core_subject_id (PK)
+core_subject_id
+career_position_id
+name
+description
+
+
+course_specific_core_subject:
+course_specific_core_subject_id (PK)
+course_specific_id
+core_subject_id
+taught_by_the_name
+
+
+entrance_test_province:
+entrance_test_province_id (PK)
+entrance_test_id
+province_id (if null, entrance_test is pan country)
+country_id
+
+institution_aaa:
+institution_aaa_id (PK)
+name
+description
+institution_id
+aaa_id
+
+course_specific_aaa:
+course_specific_aaa_id (PK)
+name
+description
+course_specific_id
+aaa_id
+
+
+
+NOTES:
+1. Text in parentheses after field name is only an explainer text. It is not part of column name.
+2. A few domains that had not been mentioned previously, have been added here (Ranking, Finance). 
+3. There is one large section of the database (the User domain that captures the details of a career aspirant) which I have not added here, as they are not required in the current scope of the DC tool. The User of the DC tool is an internal user, not our customers. They are our employees or contractors. If the need arises later in the DC tool development, we can add the customer user in the Qued database.
+4. The database in the current form has been designed for the Initial schema and for Indian geographical region. Minor changes in the database may be required (addition/removal of tables or columns) as we progress.
+
+
+
+
+
+
+
