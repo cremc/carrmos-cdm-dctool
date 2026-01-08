@@ -27,6 +27,7 @@ class MilestoneAcademicRequirement(Base, AuditMixin):
     prerequisite_score_reference_id = Column(Integer)
     prerequisite_score_value_min = Column(Float)
     requirement_group_id = Column(Integer, ForeignKey("grouping_reference.requirement_group_id"))
+    dependency_type = Column(String(100))
 
 class MilestoneWorkexRequirement(Base, AuditMixin):
     __tablename__ = "milestone_workex_requirement"

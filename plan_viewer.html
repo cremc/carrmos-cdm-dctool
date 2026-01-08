@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Domains Implementation Plan</title>
+    <!-- Using specific versions to ensure compatibility -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.4.3/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 40px;
+            color: #333;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        pre code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            color: #495057;
+            display: block;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        blockquote {
+            border-left: 4px solid #007bff;
+            margin: 0;
+            padding-left: 20px;
+            color: #555;
+            background-color: #f1f8ff;
+            padding: 10px 20px;
+        }
+
+        .mermaid {
+            text-align: center;
+            margin: 30px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content"></div>
+
+    <script>
+        const markdownContent = `
+# API Implementation Plan - New Domains
+
+## Goal Description
+Design and implement the data models and APIs for **Entrance Exams** (extended), **Scholarships**, and **Infrastructure**.
+
+## User Review Required
+> [!IMPORTANT]
+> **Entrance Exams Refactoring**: I propose moving existing \`EntranceTest\` model from \`academics.py\` to a new \`entrance_exam.py\` module for better domain isolation. This will require updating existing references.
+
+## 1. Entrance Exams Domain
+**Goal**: Expand the existing simple test definition to include structure, scheduling, and centers.
+**Effort Estimate**: Medium (due to refactoring and relationships)
+
+### Proposed Schema
+\`\`\`mermaid
+erDiagram
+    EntranceTest ||--o{ EntranceTestSection : has
+    EntranceTest ||--o{ EntranceTestSchedule : has
+    EntranceTest ||--o{ EntranceTestCenter : conducted_at
+    EntranceTest ||--o{ EntranceTestPaper : has
+    EntranceTestSection {
+        int id
+        int entrance_test_id
+        string name "e.g., Quantitative Ability"
+        string description
+        float max_score
+        float duration_minutes
+    }
+    EntranceTestSchedule {
+        int id
+        int entrance_test_id
+        string exam_cycle "e.g., 2025-Spring"
+        date registration_start
+        date registration_end
+        date exam_date
+        date result_date
+    }
+    EntranceTestCenter {
+        int id
+        int entrance_test_id
+        int city_id "FK to General Domain"
+        string center_name
+        string address
+    }
+\`\`\`
+
+### Changes
+#### [NEW] [models/entrance_exam.py](file:///c:/Users/Atul/OneDrive/Personal/4_My_Development_Projects/1_CARRMOS/CDM_DCtool/server/app/models/entrance_exam.py)
+- Move \`EntranceTest\` here.
+- Add \`EntranceTestSection\`, \`EntranceTestSchedule\`, \`EntranceTestCenter\`.
+
+## 2. Scholarships Domain
+**Goal**: Create a system to track financial aid opportunities, linked to eligibility criteria.
+**Effort Estimate**: Medium
+
+### Proposed Schema
+\`\`\`mermaid
+erDiagram
+    Scholarship ||--o{ ScholarshipEligibility : requires
+    ScholarshipProvider ||--o{ Scholarship : offers
+    Scholarship {
+        int id
+        string name
+        string description
+        float amount
+        int currency_id
+        string deadline
+        bool is_renewable
+        int quantity_available
+    }
+    ScholarshipProvider {
+        int id
+        string name
+        string type "Govt, Private, NGO"
+        string website
+    }
+    ScholarshipEligibility {
+        int id
+        int scholarship_id
+        int requirement_group_id "FK to Requirement Domain"
+        string description
+    }
+\`\`\`
+
+### Changes
+#### [NEW] [models/scholarship.py](file:///c:/Users/Atul/OneDrive/Personal/4_My_Development_Projects/1_CARRMOS/CDM_DCtool/server/app/models/scholarship.py)
+- \`Scholarship\`, \`ScholarshipProvider\`, \`ScholarshipEligibility\`.
+
+## 3. Infrastructure Domain
+**Goal**: Detail the physical and digital facilities of institutions.
+**Effort Estimate**: High (Many entity types linked to Institution)
+
+### Proposed Schema
+\`\`\`mermaid
+erDiagram
+    Institution ||--o{ Campus : has
+    Campus ||--o{ CampusFacility : has
+    FacilityCategory ||--o{ FacilityType : contains
+    CampusFacility {
+        int id
+        int campus_id
+        int facility_type_id
+        string name "e.g., Main Library"
+        string description
+        int capacity
+        string image_url
+    }
+    Hostel {
+        int id
+        int campus_id
+        string name
+        string gender_allowed "Male, Female, Co-ed"
+        int capacity
+        float fee_per_year
+    }
+\`\`\`
+
+### Changes
+#### [NEW] [models/infrastructure.py](file:///c:/Users/Atul/OneDrive/Personal/4_My_Development_Projects/1_CARRMOS/CDM_DCtool/server/app/models/infrastructure.py)
+- \`Campus\` (linked to \`Institution\`)
+- \`FacilityCategory\` (e.g., "Sports", "Labs")
+- \`FacilityType\` (e.g., "Swimming Pool", "Chemistry Lab")
+- \`CampusFacility\` (The actual instance)
+- \`Hostel\`
+        `;
+
+        // Configure mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            securityLevel: 'loose'
+        });
+
+        // Set up Marked options with custom renderer
+        const renderer = new marked.Renderer();
+        renderer.code = function (code, language) {
+            if (language === 'mermaid') {
+                return '<div class="mermaid">' + code + '</div>';
+            }
+            return '<pre><code>' + code + '</code></pre>';
+        };
+
+        marked.setOptions({ renderer: renderer });
+
+        // Render Markdown to HTML
+        document.getElementById('content').innerHTML = marked.parse(markdownContent);
+
+        // Explicitly initialize mermaid on the new content
+        // This slight delay ensures DOM is ready
+        setTimeout(() => {
+            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+        }, 100);
+    </script>
+</body>
+
+</html>

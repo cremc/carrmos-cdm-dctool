@@ -7,13 +7,13 @@ class AuditMixinBase(BaseModel):
     pass
 
 class AuditMixinCreate(AuditMixinBase):
-    created_by: Optional[str] = "system"
-    updated_by: Optional[str] = "system"
+    created_by: Optional[int] = 1
+    updated_by: Optional[int] = 1
 
 class AuditMixin(AuditMixinBase):
-    created_by: Optional[str]
+    created_by: Optional[int]
     created_date: Optional[datetime]
-    updated_by: Optional[str]
+    updated_by: Optional[int]
     updated_date: Optional[datetime]
 
 # AcademicLevel
@@ -100,9 +100,9 @@ class CourseGeneralBase(BaseModel):
     description: Optional[str] = None
     course_alternate_names: Optional[str] = None
     course_type: Optional[str] = None
-    course_duration_months: Optional[float] = None
+    course_duration: Optional[str] = None
     course_description_for_rigour: Optional[str] = None
-    course_tuition_cost_inr: Optional[float] = None
+    course_tuition_cost_inr: Optional[str] = None
     course_description_for_career: Optional[str] = None
 
 class CourseGeneralCreate(CourseGeneralBase, AuditMixinCreate):
@@ -130,6 +130,37 @@ class CoreSubjectUpdate(CoreSubjectBase):
 
 class CoreSubject(CoreSubjectBase, AuditMixin):
     core_subject_id: int
+
+    class Config:
+        orm_mode = True
+
+# EntranceTest
+class EntranceTestBase(BaseModel):
+    name: str
+    description: Optional[str] = None
+    full_name: Optional[str] = None
+    test_objective: Optional[str] = None
+    test_cost_description: Optional[str] = None
+    test_version: Optional[str] = None
+    test_objective_type: Optional[str] = None
+    test_curriculum_description: Optional[str] = None
+    test_rigour_description: Optional[str] = None
+    test_preparation_advice: Optional[str] = None
+    score_reference_id: Optional[int] = None
+    score_system_description: Optional[str] = None
+    conducted_by_institution: Optional[str] = None
+    year_established: Optional[int] = None
+    url: Optional[str] = None
+    max_score_value: Optional[str] = None
+
+class EntranceTestCreate(EntranceTestBase, AuditMixinCreate):
+    pass
+
+class EntranceTestUpdate(EntranceTestBase):
+    pass
+
+class EntranceTest(EntranceTestBase, AuditMixin):
+    entrance_test_id: int
 
     class Config:
         orm_mode = True

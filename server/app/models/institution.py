@@ -33,5 +33,5 @@ class AssociationAccreditationAffiliation(Base, AuditMixin):
     aaa_id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255))
     description = Column(Text)
-    aaa_type_id = Column(Integer)
+    aaa_type = Column(String(100)) # Enum (Association, Accreditation, Affiliation)
     country_id = Column(Integer) # FK to Country

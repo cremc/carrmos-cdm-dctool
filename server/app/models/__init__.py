@@ -7,3 +7,4 @@ from .general import *
 from .finance import *
 from .ranking import *
 from .multi_domain import *
+from .user import *

@@ -1,0 +1,37 @@
+Before we proceed, I have a few suggestions for changes in the models. 
+a. user.py
+   1. Rename the id field as user_id, to maintain naming consistency. 
+         users_id = Column(Integer, primary_key=True, index=True)
+   2. Replace full_name with 
+         first_name= Column(String(100))
+         last_name = Column(String(100))
+   3. Replace is_superuser field with db_role field.
+         db_role = Column(Integer, default=1) # 1:data_viewer, 2:data_entry_operator, 3:data_qcer, 4: data_collector1 and so on...
+
+b. academics.py
+  In class AuditMixin:
+    1. Define created_by and updated_by as follows:
+	created_by = Column(Integer, default=get_current_user_id)  
+	updated_by = Column(Integer, default=get_current_user_id)
+	# For now, get_current_user_id can just return 1.
+
+    2. created_date and updated_date should have timezone = True, something like below:
+	created_date = Column(DateTime(timezone=True), server_default=func.now())
+	updated_date = Column(DateTime(timezone=True), server_default=func.now(), onupdate)
+      We need to ensure that the created_date and updated_date saves the current time as per the timezone of the user. If you think it necessary, we can have a timezone field in the user model for each user.
+
+   In class CourseGeneral:
+     3. Change course_duration_months to course_duration as follows:
+	course_duration = Column(String(100))
+
+     4. Change course_tuition_cost_inr type:
+        course_tuition_cost_inr = Column(String(255))
+
+  In class EntranceTest:
+     5. Add the following missing field:
+	max_score_value = Column(String(100))
+
+c. institution.py
+  In class AssociationAccreditationAffiliation:
+    1. Perhaps we should change aaa_type_id to aaa_type. For now, the values can be only be 'Association', 'Accreditation' or 'Affiliation' 
+	aaa_type_id = Column(String(100))    #enum

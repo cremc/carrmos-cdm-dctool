@@ -14,6 +14,13 @@ def read_root():
 
 # We will import routers here as we build them.
 # app.include_router(collect.router)
-from .routers import academics, career
+from .routers import academics, career, institution, general, ranking, finance, requirement, course, auth
+app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(academics.router)
 app.include_router(career.router)
+app.include_router(institution.router)
+app.include_router(general.router)
+app.include_router(ranking.router)
+app.include_router(finance.router)
+app.include_router(requirement.router)
+app.include_router(course.router)

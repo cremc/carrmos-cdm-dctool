@@ -284,6 +284,7 @@ prerequisite_discipline_id
 prerequisite_score_reference_id
 prerequisite_score_value_min
 requirement_group_id
+dependency_type
 
 
 milestone_workex_requirement :

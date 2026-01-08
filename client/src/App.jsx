@@ -1,13 +1,48 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import DataReview from './pages/DataReview';
+import DataCollection from './pages/DataCollection';
+import DataQuality from './pages/DataQuality';
+import DataEditBulk from './pages/DataEditBulk';
+import DataEditIndividual from './pages/DataEditIndividual';
+import DataRelate from './pages/DataRelate';
+import DataManager from './pages/DataManager';
+import DataMigration from './pages/DataMigration';
+import DataAnalyzer from './pages/DataAnalyzer';
+import UserManager from './pages/UserManager';
+import AccessManager from './pages/AccessManager';
+import Layout from './components/Layout';
+import './App.css';
 
 function App() {
+    // fast-track: temporary auth check until real auth is implemented
+    const isAuthenticated = true;
+
     return (
-        <div className="app-container">
-            <h1>Qued Data Collection Tool</h1>
-            <p>Environment: India (Initial Schema)</p>
-        </div>
-    )
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+
+                <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/data-review" element={<DataReview />} />
+                    <Route path="/data-collection" element={<DataCollection />} />
+                    <Route path="/data-quality" element={<DataQuality />} />
+                    <Route path="/data-edit/bulk" element={<DataEditBulk />} />
+                    <Route path="/data-edit/individual" element={<DataEditIndividual />} />
+                    <Route path="/data-relate" element={<DataRelate />} />
+                    <Route path="/data-manager" element={<DataManager />} />
+                    <Route path="/data-migration" element={<DataMigration />} />
+                    <Route path="/data-analyzer" element={<DataAnalyzer />} />
+                    <Route path="/user-manager" element={<UserManager />} />
+                    <Route path="/access-manager" element={<AccessManager />} />
+                </Route>
+            </Routes>
+        </Router>
+    );
 }
 
-export default App
+export default App;

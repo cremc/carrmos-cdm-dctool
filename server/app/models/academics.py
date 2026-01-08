@@ -1,13 +1,18 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Enum, Float
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Enum, Float, func
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..database import Base
 
+def get_current_user_id():
+    """Temporary function to return the current user ID. 
+    In the future, this should be linked to the authentication context."""
+    return 1
+
 class AuditMixin:
-    created_by = Column(String(255))
-    created_date = Column(DateTime, default=datetime.utcnow)
-    updated_by = Column(String(255))
-    updated_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_by = Column(Integer, default=get_current_user_id)
+    created_date = Column(DateTime(timezone=True), server_default=func.now())
+    updated_by = Column(Integer, default=get_current_user_id)
+    updated_date = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 class AcademicLevel(Base, AuditMixin):
     __tablename__ = "academic_level"
@@ -65,9 +70,9 @@ class CourseGeneral(Base, AuditMixin):
     description = Column(Text)
     course_alternate_names = Column(Text)
     course_type = Column(String(255))
-    course_duration_months = Column(Float)
+    course_duration = Column(String(100))
     course_description_for_rigour = Column(Text)
-    course_tuition_cost_inr = Column(Float)
+    course_tuition_cost_inr = Column(String(255))
     course_description_for_career = Column(Text)
 
     academic_level = relationship("AcademicLevel")
@@ -98,6 +103,7 @@ class EntranceTest(Base, AuditMixin):
     conducted_by_institution = Column(String(255))
     year_established = Column(Integer)
     url = Column(String(255))
+    max_score_value = Column(String(100))
 
 class CourseGeneralCoreSubject(Base, AuditMixin):
     __tablename__ = "course_general_core_subject"
