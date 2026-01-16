@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrmos Data Collector Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "card-dark": "#1e293b", 
+                        "border-dark": "#293038",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-border-dark bg-white dark:bg-[#111418] px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center rounded bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Carrmos Data Collector</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-400 dark:text-[#9dabb8] flex border-none bg-slate-100 dark:bg-[#293038] items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-l-none border-l-0 text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-[#293038] focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-[#9dabb8] px-4 pl-2 text-sm font-normal leading-normal" placeholder="Search data..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
+<a class="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-border-dark">
+<button class="relative text-slate-500 hover:text-primary dark:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#111418]"></span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-white dark:ring-border-dark" data-alt="Profile picture of a professor" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApDSHwXtARvV1eH2BYLI_WbIMVoCfdxv1KmSrO7gWkecMG5FeXBayivg6nPgtccfjpaNAGxNXmVNbhInfHdtMHvytL9AjUiQKrJ8E2CypjP5OTvpCt5PEIctdVIeIFhI3oD9p3hZ5QJPvjCGwbPLu1OPxrdegg4HKl65kBKnqGTaR83ZLRzVyl5E9JjhXZq-FCgFuDkv_qNGPXGxrdsC-kpd6YGE7rTxzlcVsi1r-AUApsH-ORF5zvtyyEPHtIxPbAW6YTPhFOMA");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center py-6 px-4 md:px-8 lg:px-10">
+<div class="w-full max-w-7xl flex flex-col gap-6">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Welcome back, Ankur</h1>
+<p class="text-slate-500 dark:text-[#9dabb8] text-base font-normal leading-normal">Here is an overview of your data collection activities for this semester.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-[#9dabb8] text-sm font-medium uppercase tracking-wider">Pending Tasks</p>
+<span class="material-symbols-outlined text-primary">pending_actions</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">3</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-[#9dabb8] text-sm font-medium uppercase tracking-wider">New Notifications</p>
+<span class="material-symbols-outlined text-amber-500">notifications_active</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">5</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-[#9dabb8] text-sm font-medium uppercase tracking-wider">Upcoming Deadlines</p>
+<span class="material-symbols-outlined text-rose-500">event_busy</span>
+</div>
+<p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight">2</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-2">
+<section class="lg:col-span-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Current User Tasks</h2>
+<div class="flex gap-2">
+<button class="flex h-8 items-center gap-x-1 rounded-lg bg-slate-100 dark:bg-[#293038] pl-3 pr-2 transition-colors hover:bg-slate-200 dark:hover:bg-[#363f4a]">
+<span class="text-slate-700 dark:text-white text-xs font-medium">Filter</span>
+<span class="material-symbols-outlined text-slate-700 dark:text-white text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-4 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">In Progress</span>
+<span class="text-xs text-slate-400 dark:text-slate-500">Last updated 2h ago</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Course Ranking Review</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Review and update ranking data for engineering courses.</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-slate-600 dark:text-slate-300">Progress</span>
+<span class="text-primary">60%</span>
+</div>
+<div class="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[60%] rounded-full"></div>
+</div>
+</div>
+<div class="pt-2 flex justify-end">
+<button class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                                        Continue
+                                    </button>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">Not Started</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Institution Contact Update</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Update placement officer details for IIT Bombay.</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-slate-600 dark:text-slate-300">Progress</span>
+<span class="text-slate-400">0%</span>
+</div>
+<div class="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-slate-400 w-[0%] rounded-full"></div>
+</div>
+</div>
+<div class="pt-2 flex justify-end">
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-lg shadow-primary/20">
+                                        Start Task
+                                    </button>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-xl p-5 border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm opacity-70 hover:opacity-100 transition-opacity">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">Submitted</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Placement Report Verification</h3>
+</div>
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-xs font-medium">
+<span class="text-slate-600 dark:text-slate-300">Status</span>
+<span class="text-green-500">Complete</span>
+</div>
+<div class="h-2 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 w-[100%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="lg:col-span-3 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Notifications</h2>
+<button class="text-primary text-xs font-semibold hover:underline">Mark all read</button>
+</div>
+<div class="flex flex-col rounded-xl border border-gray-200 dark:border-[#3c4753] bg-white dark:bg-[#1e293b] shadow-sm divide-y divide-gray-100 dark:divide-[#293038] overflow-hidden">
+<div class="p-4 flex gap-3 hover:bg-slate-50 dark:hover:bg-[#252f3e] transition-colors cursor-pointer group">
+<div class="mt-1 min-w-[24px]">
+<div class="size-2 rounded-full bg-primary mb-1 ml-1"></div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-tight group-hover:text-primary transition-colors">Ranking Data Verified</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Your "Top 50 MBA" list has been verified.</p>
+<p class="text-[10px] text-slate-400 mt-1">10 mins ago</p>
+</div>
+</div>
+<div class="p-4 flex gap-3 hover:bg-slate-50 dark:hover:bg-[#252f3e] transition-colors cursor-pointer group">
+<div class="mt-1 min-w-[24px]">
+<span class="material-symbols-outlined text-amber-500 text-[20px]">warning</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-tight">Platform Update</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">New career mapping tools available this Friday.</p>
+<p class="text-[10px] text-slate-400 mt-1">2 hours ago</p>
+</div>
+</div>
+<div class="p-4 flex gap-3 hover:bg-slate-50 dark:hover:bg-[#252f3e] transition-colors cursor-pointer group">
+<div class="mt-1 min-w-[24px]">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">chat</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-tight">Feedback on Profile</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Admin commented on "BITS Pilani Profile".</p>
+<p class="text-[10px] text-slate-400 mt-1">Yesterday</p>
+</div>
+</div>
+<div class="p-4 flex gap-3 hover:bg-slate-50 dark:hover:bg-[#252f3e] transition-colors cursor-pointer group">
+<div class="mt-1 min-w-[24px]">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">folder_shared</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-semibold text-slate-900 dark:text-white leading-tight">New Project Assigned</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">You have been added to "Placement 2024" project.</p>
+<p class="text-[10px] text-slate-400 mt-1">2 days ago</p>
+</div>
+</div>
+</div>
+</section>
+<section class="lg:col-span-3 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Deadlines</h2>
+<button class="flex h-8 items-center justify-center rounded-lg bg-slate-100 dark:bg-[#293038] px-2 transition-colors hover:bg-slate-200 dark:hover:bg-[#363f4a]">
+<span class="material-symbols-outlined text-slate-700 dark:text-white text-[18px]">calendar_month</span>
+</button>
+</div>
+<div class="flex flex-col gap-3">
+<div class="relative flex flex-col gap-2 rounded-xl bg-white dark:bg-[#1e293b] p-4 border border-rose-200 dark:border-rose-900/30 shadow-sm overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col">
+<p class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wide mb-1">Due in 2 Days</p>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Scholarship Data Review</h4>
+</div>
+<div class="flex flex-col items-center bg-slate-50 dark:bg-[#111418] rounded p-1 min-w-[40px]">
+<span class="text-[10px] uppercase font-bold text-slate-500">Oct</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white leading-none">24</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 pl-2">Assigned by <span class="text-slate-700 dark:text-slate-300 font-medium">Data Manager</span></p>
+</div>
+<div class="relative flex flex-col gap-2 rounded-xl bg-white dark:bg-[#1e293b] p-4 border border-gray-200 dark:border-[#3c4753] shadow-sm overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col">
+<p class="text-xs font-bold text-primary uppercase tracking-wide mb-1">Due Next Week</p>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Corporate Partner List</h4>
+</div>
+<div class="flex flex-col items-center bg-slate-50 dark:bg-[#111418] rounded p-1 min-w-[40px]">
+<span class="text-[10px] uppercase font-bold text-slate-500">Oct</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white leading-none">30</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 pl-2">Verification required before submission.</p>
+</div>
+<div class="relative flex flex-col gap-2 rounded-xl bg-white dark:bg-[#1e293b] p-4 border border-gray-200 dark:border-[#3c4753] shadow-sm overflow-hidden opacity-80">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-300 dark:bg-slate-600"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Due Nov 15</p>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">Career Fair Schedule</h4>
+</div>
+<div class="flex flex-col items-center bg-slate-50 dark:bg-[#111418] rounded p-1 min-w-[40px]">
+<span class="text-[10px] uppercase font-bold text-slate-500">Nov</span>
+<span class="text-lg font-bold text-slate-900 dark:text-white leading-none">15</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 pl-2">Annual event planning dates.</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 pt-4 border-t border-dashed border-gray-200 dark:border-[#3c4753] mt-2">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold">Actions</h2>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white p-3 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+        Start New Data Entry
+    </button>
+<button class="w-full bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-[#3c4753] hover:border-primary/50 text-slate-700 dark:text-white p-3 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined text-[20px] text-slate-500 dark:text-slate-400">history</span>
+        Review Previous Work
+    </button>
+<button class="w-full bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-[#3c4753] hover:border-primary/50 text-slate-700 dark:text-white p-3 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined text-[20px] text-slate-500 dark:text-slate-400">fact_check</span>
+        Perform QC
+    </button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

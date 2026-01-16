@@ -1,10 +1,14 @@
+@import "tailwindcss";
+
 /* Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;700;900&display=swap');
 
 :root {
   /* Premium Color Palette (HSL) */
-  --hue-primary: 220; /* Deep Blue/Indigo */
-  --hue-accent: 260;  /* Purple/Violet */
+  --hue-primary: 220;
+  /* Deep Blue/Indigo */
+  --hue-accent: 260;
+  /* Purple/Violet */
   --hue-success: 150;
   --hue-warning: 35;
   --hue-danger: 350;
@@ -14,7 +18,7 @@
   --bg-card: hsl(var(--hue-primary), 25%, 12%);
   --bg-card-hover: hsl(var(--hue-primary), 25%, 16%);
   --bg-glass: hsla(var(--hue-primary), 30%, 15%, 0.4);
-  
+
   /* Text */
   --text-main: hsl(0, 0%, 95%);
   --text-muted: hsl(220, 10%, 65%);
@@ -24,7 +28,7 @@
   --accent-primary: hsl(var(--hue-accent), 80%, 60%);
   --accent-secondary: hsl(190, 80%, 60%);
   --border-light: hsla(0, 0%, 100%, 0.1);
-  
+
   /* Spacing */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -36,8 +40,8 @@
   --spacing-xl: 32px;
 
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.2);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.2);
   --shadow-glow: 0 0 20px hsla(var(--hue-accent), 80%, 60%, 0.2);
 
   /* Transitions */
@@ -58,20 +62,32 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, hsla(var(--hue-accent), 40%, 20%, 0.1) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, hsla(190, 40%, 20%, 0.1) 0%, transparent 40%);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-h1 { font-size: 2rem; color: var(--text-main); }
-h2 { font-size: 1.5rem; color: var(--text-main); }
+h1 {
+  font-size: 2rem;
+  color: var(--text-main);
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: var(--text-main);
+}
 
 a {
   text-decoration: none;
@@ -95,17 +111,42 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
-.flex-center { display: flex; align-items: center; justify-content: center; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.flex-col { display: flex; flex-direction: column; }
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.text-accent { color: var(--accent-primary); }
-.text-muted { color: var(--text-muted); }
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-accent {
+  color: var(--accent-primary);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
 
 /* Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -116,13 +157,16 @@ button {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-dark);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-light);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }

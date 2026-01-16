@@ -1,0 +1,111 @@
+
+
+
+
+
+It looks like the theme being currently used here for the application is Data Collection of Student's records, faculty and so on. However, our intended use of the application is as follows:
+1. Objective of the application: Provide a user-friendly platform for data collection, data qc, data collection approvals with access control for a portal providing Career Planning and Development solutions in India. 
+2. The data being collected are in the following domains:
+	Academics paths domain: Academic levels of courses, Streams, Discipline Groups and Disciplines, generic Courses,  subjects and topics
+	Career domain: Names of industry sectors, industries and industry branches, career positions, skills and subskills
+	Institution domain: Names of education institutions, business organizations, their categories, their information regarding association, accreditation and affiliation, ranking in India
+	Course domain: names and types of specific courses available in India (for each generic course) and details such as course duration, tuition cost, attendance type, target audience, scholarships available, different types of entrance exams, ranking in India
+	Requirements domain: Admissions requirements (Academic, work experience, skills, certifications, entrance exams) of different generic courses, of different career positions 
+	GENERAL domain: Names of Countries, States and Provinces in countries and Cities, Location information and Contact information details
+	Finance domain: Different expense types, financial aids types, currencies
+	Interdomain relationships: Discipline to Industry, Career position to core subject, specific course to core subjects, entrance exams to states and provinces, specific courses to association/acceditation details and so on.
+	
+The users of this applications are data collectors, data quality checkers, data viewers analyzers, data managers, database admins. 
+Please changes the example content given in the UI designs to reflect the above domains for a career planning and solutions provider.
+
+
+
+
+
+
+
+
+
+In this page, the following changes are suggested:
+    The page header is missing. Add the page title "Data Review" somewhere in the top portion of the page below the title bar.
+    The left panel which provides access to the domains, tables and their columns, has three level of hierarchy. The top level is Domain level that you have shown (Academics, Career, Institution and so on) is correct. When a Domain is expanded, you get all the tables under it. For example, under Academics domain, the following tables should show (in the given order):
+academic_level
+stream
+discipline_group
+discipline
+course_general
+core_subject
+entrance_test
+course_general_core_subject
+course_general_discipline
+
+    The example dataset is not correct, and is misleading. Currently in this application we are not storing or reviewing users/students data.
+
+------------
+
+The page header size and style is not consistent with the size and style of other pages. Please increase the font weight.
+All the domains are not showing, only two domains are showing: Academic Paths and Institution. Here is the full list of domains that need to show.
+
+Academics paths
+Career
+Institution
+Course
+Requirements
+General
+Finance
+Multi-domain
+
+Each table under the domains should also be collapsible and expandable, to reveal the columns in it. Each column name is preceded by a check box. In the design we need to show the academic_level table expanded, with its columns displayed. User can select multiple columns in multiple tables to display at once. For our example, we need to show the following tables under academic_level table:
+
+academic_level_id (PK)
+name*
+description*
+min_years_to_complete
+average_years_to_complete*
+max_years_to_complete
+prerequisite_academic_level_ID
+order*
+
+The Join On and Group By features should appear below the search box.
+The columns marked with an *, should be shown as selected in the left panel, and should be displayed in the middle panel and right side panel.
+
+-------------
+
+Make the following changes in this page:
+
+The button on bottom right corner should be labeled as Edit Mode.
+
+As you have done in other pages, add horizontal menu in the main title bar. Add the following:
+
+Dashboard Data Review (highlighted) Data QC Data Relate
+
+In the top of the left panel, just below the header DATA DISCTIONARY, replace the text "Academic Domain Schema" to "Db: Qued_India_Staging"
+
+------------
+
+Ensure that all the pages, including the dashboard and excluding the log-in page, have the same nav bar look and feel as in the latest Data Review page: Horizontal menu, and on extreme right Help icon, settings icon and user icon.
+
+------------
+
+In this form, make the page header style and placement consistent with the latest Data Review page.
+
+In the left hand panel show the list of Domains (as shown in the Data Review page). Each domain when expanded reveals the tables under it. In this form show the Career domain in expanded and display the following table names under it.
+
+industry_sector
+industry
+industry_branch
+career_position
+skill_category
+skill_subcategory
+score_reference
+skill_subcategory_career_position
+
+Show the career_position as selected.
+
+-----------------
+
+In the left side panel, for each table add a push icon so that the user knows that this table can be pushed to the middle panel.
+
+The middle panel needs to have the following layout:
+This panel will be divided into two horizontal panels occupying the middle panel in roughly 35:75 ratio. 
+The top part of the panel (the top horizontal panel having 35% area) will be occupied by the table that has been pushed from the left panel.

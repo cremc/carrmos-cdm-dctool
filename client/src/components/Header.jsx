@@ -1,93 +1,47 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { Bell, Search } from 'lucide-react';
+import { Search, Bell, Menu } from 'lucide-react';
 
 const Header = () => {
-    const location = useLocation();
-
-    const getPageTitle = (pathname) => {
-        const format = (str) => str.replace('/', '').split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
-        if (pathname === '/') return 'User Dashboard';
-        if (pathname === '/review') return 'Data Review';
-        if (pathname === '/collection') return 'Data Collection';
-        if (pathname === '/quality') return 'Data Quality Check';
-        if (pathname === '/edit-table') return 'Data Edit (Table)';
-        if (pathname === '/edit-form') return 'Data Edit (Form)';
-        if (pathname === '/relate') return 'Data Relate (DARMA)';
-        if (pathname === '/manager') return 'Data Manager';
-        if (pathname === '/migration') return 'Data Migration';
-        if (pathname === '/analyzer') return 'Data Analyzer';
-        if (pathname === '/users') return 'User Manager';
-        if (pathname === '/access') return 'Access Manager';
-        return format(pathname);
-    };
-
     return (
-        <header className="glass-panel" style={{
-            height: '64px',
-            margin: '0 0 24px 0',
-            padding: '0 24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            position: 'sticky',
-            top: '16px',
-            zIndex: 9
-        }}>
-            <div>
-                <h1 style={{ fontSize: '1.25rem' }}>{getPageTitle(location.pathname)}</h1>
+        <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-border-dark bg-white dark:bg-[#111418] px-6 py-3">
+            {/* Left side (Title is in sidebar, so minimal here or breadcrumbs? Design shows just the right side mostly if sidebar is present) */}
+            {/* The provided Dashboard HTML had the header spanning the full width including logo. 
+                Since we have a Sidebar layout, this header sits to the right of the sidebar. 
+                We will implement the Search and Right-side controls here. 
+            */}
+
+            <div className="flex items-center gap-4">
+                {/* Search Bar - Hidden on small screens */}
+                <label className="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+                    <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div className="text-slate-400 dark:text-[#9dabb8] flex border-none bg-slate-100 dark:bg-[#293038] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                            <Search size={20} />
+                        </div>
+                        <input
+                            className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-l-none border-l-0 text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-[#293038] focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-[#9dabb8] px-4 pl-2 text-sm font-normal leading-normal"
+                            placeholder="Search data..."
+                            defaultValue=""
+                        />
+                    </div>
+                </label>
             </div>
 
-            <div className="flex-center" style={{ gap: '20px' }}>
-                <div className="flex-center" style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    padding: '8px 12px',
-                    borderRadius: '20px',
-                    gap: '8px'
-                }}>
-                    <Search size={16} className="text-muted" />
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            outline: 'none',
-                            color: 'var(--text-main)',
-                            fontSize: '0.9rem',
-                            width: '150px'
-                        }}
-                    />
+            <div className="flex flex-1 justify-end gap-6 items-center">
+                <div className="hidden md:flex items-center gap-6">
+                    <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+                    <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
+                    <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Settings</a>
                 </div>
-
-                <button className="flex-center" style={{
-                    background: 'transparent',
-                    color: 'var(--text-main)',
-                    position: 'relative'
-                }}>
-                    <Bell size={20} />
-                    <span style={{
-                        position: 'absolute',
-                        top: '-2px',
-                        right: '-2px',
-                        width: '8px',
-                        height: '8px',
-                        background: 'var(--accent-secondary)',
-                        borderRadius: '50%'
-                    }}></span>
-                </button>
-
-                <div className="flex-center" style={{ gap: '10px' }}>
-                    <div style={{ textAlign: 'right' }}>
-                        <p style={{ fontSize: '0.9rem', fontWeight: 500 }}>Atul User</p>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Admin</p>
-                    </div>
-                    <div style={{
-                        width: '40px',
-                        height: '40px',
-                        background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-                        borderRadius: '50%'
-                    }}></div>
+                <div className="flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-border-dark">
+                    <button className="relative text-slate-500 hover:text-primary dark:text-white transition-colors">
+                        <Bell size={24} />
+                        <span className="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#111418]"></span>
+                    </button>
+                    {/* Profile Picture Placeholder */}
+                    <div
+                        className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-white dark:ring-border-dark bg-slate-200"
+                        style={{ backgroundImage: 'url("https://ui-avatars.com/api/?name=Ankur+Singh&background=0D8ABC&color=fff")' }}
+                    ></div>
                 </div>
             </div>
         </header>

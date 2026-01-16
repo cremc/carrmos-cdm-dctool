@@ -19,9 +19,11 @@ def login_access_token(
     """
     OAuth2 compatible token login, get an access token for future requests
     """
+    print(f"DEBUG: Login attempt for {form_data.username}")
     user = crud_user.authenticate_user(
         db, email=form_data.username, password=form_data.password
     )
+    print(f"DEBUG: Authenticate result: {user}")
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     elif not user.is_active:
@@ -29,7 +31,7 @@ def login_access_token(
     access_token_expires = timedelta(minutes=config.settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     return {
         "access_token": security.create_access_token(
-            user.id, expires_delta=access_token_expires
+            user.users_id, expires_delta=access_token_expires
         ),
         "token_type": "bearer",
     }
