@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Search, X } from 'lucide-react';
 
-const SearchableDropdown = ({ options = [], value, onChange, placeholder = "Select...", label, disabled = false }) => {
+const SearchableDropdown = ({ options = [], value, onChange = () => { }, placeholder = "Select...", label, disabled = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const wrapperRef = useRef(null);
@@ -41,7 +41,7 @@ const SearchableDropdown = ({ options = [], value, onChange, placeholder = "Sele
                 className={`
                     flex items-center justify-between w-full p-3 rounded-lg border bg-white dark:bg-[#1e293b] 
                     cursor-pointer transition-all duration-200
-                    ${isOpen ? 'border-primary ring-2 ring-primary/20' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'}
+                    ${isOpen ? 'border-primary ring-1 ring-primary/20' : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'}
                     ${disabled ? 'opacity-50 cursor-not-allowed bg-slate-100 dark:bg-slate-800' : ''}
                 `}
                 onClick={() => !disabled && setIsOpen(!isOpen)}
