@@ -7,13 +7,14 @@ class AuditMixinBase(BaseModel):
     pass
 
 class AuditMixinCreate(AuditMixinBase):
-    created_by: Optional[str] = "system"
-    updated_by: Optional[str] = "system"
+    created_by: Optional[int] = 1
+    updated_by: Optional[int] = 1
+
 
 class AuditMixin(AuditMixinBase):
-    created_by: Optional[str]
+    created_by: Optional[int]
     created_date: Optional[datetime]
-    updated_by: Optional[str]
+    updated_by: Optional[int]
     updated_date: Optional[datetime]
 
 # GroupingReference

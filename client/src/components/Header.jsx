@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Bell, Menu } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -30,7 +31,7 @@ const Header = () => {
                 <div className="hidden md:flex items-center gap-6">
                     <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
                     <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
-                    <a className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Settings</a>
+                    <Link to="/settings" className="text-slate-600 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors">Settings</Link>
                 </div>
                 <div className="flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-border-dark">
                     <button className="relative text-slate-500 hover:text-primary dark:text-white transition-colors">

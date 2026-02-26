@@ -13,6 +13,7 @@ import DataMigration from './pages/DataMigration';
 import DataAnalyzer from './pages/DataAnalyzer';
 import UserManager from './pages/UserManager';
 import AccessManager from './pages/AccessManager';
+import Settings from './pages/Settings';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/data-analyzer" element={<DataAnalyzer />} />
                         <Route path="/user-manager" element={<UserManager />} />
                         <Route path="/access-manager" element={<AccessManager />} />
+                        <Route path="/settings" element={<Settings />} />
                     </Route>
                 </Route>
             </Routes>

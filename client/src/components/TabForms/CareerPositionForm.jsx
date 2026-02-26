@@ -2,74 +2,71 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import SearchableDropdown from '../SearchableDropdown';
 import {
-    fetchAcademicLevels,
-    fetchDisciplineGroups,
-    fetchDisciplines,
-    fetchCountries,
-    fetchProvinces,
-    fetchCurrencies,
-    fetchInstitutionCategories,
-    fetchInstitutions
+    fetchIndustries,
+    fetchIndustryBranches,
+    fetchCurrencies
 } from '../../utils/api';
+
+const ROLE_TYPES = [
+    { value: 'interns', label: 'Interns' },
+    { value: 'entrylevel', label: 'Entry-level and Junior' },
+    { value: 'midlevel', label: 'Mid-level' },
+    { value: 'senior', label: 'Senior-level' },
+    { value: 'executive', label: 'Executive-level' },
+    { value: 'all', label: 'All levels' }
+];
 
 const CHECKBOX_OPTIONS = [
     { id: 'name', label: 'Name' },
     { id: 'description', label: 'Description' },
-    { id: 'course_general', label: 'Course General' },
-    { id: 'institution_name', label: 'Institution name' },
-    { id: 'admission_criteria', label: 'Admission criteria' },
-    { id: 'course_type', label: 'course_type' },
-    { id: 'tuition_cost', label: 'tuition cost' },
-    { id: 'course_prep_advice', label: 'course prep advice' },
-    { id: 'degree_awarded', label: 'Degree awarded' },
-    { id: 'certified_by', label: 'Certified by' },
-    { id: 'conducted_by', label: 'Conducted by' },
-    { id: 'course_duration', label: 'Course duration' },
-    { id: 'career_prospect', label: 'Career prospect' },
-    { id: 'rigour', label: 'Rigour' },
-    { id: 'activeness_scale', label: 'Activeness scale' },
-    { id: 'physical_load_scale', label: 'Physical load scale' },
-    { id: 'mental_load_scale', label: 'Mental load scale' },
-    { id: 'analytical_load_scale', label: 'Analytical load scale' }
+    { id: 'industry', label: 'Industry' },
+    { id: 'industry_branch', label: 'Industry branch' },
+    { id: 'salary_range', label: 'Annual Salary range in Lacs INR' },
+    { id: 'employing_organizations', label: 'Employing organizations' },
+    { id: 'salary_potential', label: 'Salary potential' },
+    { id: 'lifestyle_potential', label: 'Lifestyle potential' },
+    { id: 'career_growth_potential', label: 'Career growth opportunities' },
+    { id: 'job_stability_potential', label: 'Job stability potential' },
+    { id: 'travel_opportunities', label: 'Travel opportunities' },
+    { id: 'work_life_balance', label: 'Work-life balance' },
+    { id: 'abroad_opportunities', label: 'Settling down abroad opportunities' },
+    { id: 'networking_potential', label: 'Networking potential' },
+    { id: 'sedantariness', label: 'Amount of sedentariness expected' },
+    { id: 'physical_load', label: 'Physical load expected' },
+    { id: 'mental_load', label: 'Mental load expected' },
+    { id: 'analytical_load', label: 'Analytical load expected' },
+    { id: 'travel_expected', label: 'Amount of travel expected' },
+    { id: 'sales_effort', label: 'Amount of sales effort expected' },
+    { id: 'data_source', label: 'Data source' }
 ];
 
-const CourseSpecificForm = ({ formData, onChange }) => {
+const DEFAULT_OTHER_SPECS = `Name should be the most common industry name along with role type in parentheses, for example Junior ML Engineer (entry level)
+Description should be short and in the range of 15 to 25 words.
+Annual Salary range should be in Lacs INR.
+Give at least 5 examples, | separated, for types of employing organizations.
+Possible values for Salary potential, Lifestyle potential, Career growth opportunities, Job stability potential, Travel opportunities, Work-life balance, Settling down abroad opportunities, Networking potential should be limited to the following four values: Unknown/Low/Medium/High
+Possible values for Amount of sedentariness expected, Physical load expected, Mental load expected, Analytical load expected, Amount of travel expected, Amount of sales effort expected should be limited to the following four values: None/Low/Medium/High
+Data source should be the top URL from where major info has been found.`;
+
+const CareerPositionForm = ({ formData, onChange }) => {
     const [options, setOptions] = useState({
-        academicLevels: [],
-        disciplineGroups: [],
-        disciplines: [],
-        countries: [],
-        states: [],
-        currencies: [],
-        institutionCategories: [],
-        institutions: []
+        industries: [],
+        industryBranches: [],
+        currencies: []
     });
 
     useEffect(() => {
         const loadOptions = async () => {
             try {
-                const [
-                    academicLevels, disciplineGroups, disciplines, countries, states,
-                    currencies, institutionCategories, institutions
-                ] = await Promise.all([
-                    fetchAcademicLevels(),
-                    fetchDisciplineGroups(),
-                    fetchDisciplines(),
-                    fetchCountries(),
-                    fetchProvinces(),
-                    fetchCurrencies(),
-                    fetchInstitutionCategories(),
-                    fetchInstitutions()
+                const [industries, industryBranches, currencies] = await Promise.all([
+                    fetchIndustries(),
+                    fetchIndustryBranches(),
+                    fetchCurrencies()
                 ]);
                 setOptions({
-                    academicLevels,
-                    disciplineGroups,
-                    disciplines,
-                    countries,
-                    states,
-                    currencies,
-                    institutionCategories,
-                    institutions
+                    industries,
+                    industryBranches,
+                    currencies
                 });
             } catch (error) {
                 console.error("Error fetching dropdown options:", error);
@@ -80,30 +77,21 @@ const CourseSpecificForm = ({ formData, onChange }) => {
 
     // Ensure nested state exists
     const {
-        academicLevel, disciplineGroup, discipline, country, state,
-        institutionCategory, institution,
+        industry, industryBranch, roleType,
         selectedCheckboxes, descLength, currency, otherSpecs
     } = formData || {};
 
-    // Filter disciplines based on selected group
-    const filteredDisciplines = disciplineGroup
-        ? options.disciplines.filter(d => d.disciplineGroupId === disciplineGroup.value)
-        : options.disciplines;
-
-    // Filter states based on selected country
-    const filteredStates = country
-        ? options.states.filter(s => s.countryId === country.value)
-        : options.states;
+    // Filter branches based on selected industry
+    const filteredBranches = industry
+        ? options.industryBranches.filter(b => b.industryId === industry.value)
+        : options.industryBranches;
 
     const handleDropdownChange = (field, option) => {
         const updates = { [field]: option };
 
         // Reset dependent fields
-        if (field === 'disciplineGroup') {
-            updates.discipline = null;
-        }
-        if (field === 'country') {
-            updates.state = null;
+        if (field === 'industry') {
+            updates.industryBranch = null;
         }
 
         onChange({
@@ -129,71 +117,43 @@ const CourseSpecificForm = ({ formData, onChange }) => {
         });
     };
 
+    // Initialize default other specs if empty
+    useEffect(() => {
+        if (formData && !formData.otherSpecs) {
+            onChange({
+                ...formData,
+                otherSpecs: DEFAULT_OTHER_SPECS
+            });
+        }
+    }, []); // Run once on mount
+
     return (
         <div className="grid grid-cols-12 gap-6 h-full p-1">
             {/* Column 1: Dropdowns (25% - spanned as 3/12) */}
             <div className="col-span-3 flex flex-col gap-4 overflow-y-auto pr-2">
                 <SearchableDropdown
-                    label="Academic Level"
-                    options={options.academicLevels}
-                    placeholder="Academic Level..."
-                    value={academicLevel}
-                    onChange={(opt) => handleDropdownChange('academicLevel', opt)}
-                />
-
-                <div className="flex gap-2">
-                    <div className="flex-1">
-                        <SearchableDropdown
-                            label="Discipline Group"
-                            options={options.disciplineGroups}
-                            placeholder="Discipline Group..."
-                            value={disciplineGroup}
-                            onChange={(opt) => handleDropdownChange('disciplineGroup', opt)}
-                        />
-                    </div>
-                </div>
-
-                <SearchableDropdown
-                    label="Discipline"
-                    options={filteredDisciplines}
-                    placeholder="Discipline..."
-                    value={discipline}
-                    onChange={(opt) => handleDropdownChange('discipline', opt)}
-                    disabled={!disciplineGroup}
-                />
-
-                <div className="grid grid-cols-2 gap-2">
-                    <SearchableDropdown
-                        label="Country"
-                        options={options.countries}
-                        placeholder="Country..."
-                        value={country}
-                        onChange={(opt) => handleDropdownChange('country', opt)}
-                    />
-                    <SearchableDropdown
-                        label="State/Prov"
-                        options={filteredStates}
-                        placeholder="State/Prov..."
-                        value={state}
-                        onChange={(opt) => handleDropdownChange('state', opt)}
-                        disabled={!country}
-                    />
-                </div>
-
-                <SearchableDropdown
-                    label="Institution Category"
-                    options={options.institutionCategories}
-                    placeholder="Institution Category..."
-                    value={institutionCategory}
-                    onChange={(opt) => handleDropdownChange('institutionCategory', opt)}
+                    label="Industry"
+                    options={options.industries}
+                    placeholder="Industry..."
+                    value={industry}
+                    onChange={(opt) => handleDropdownChange('industry', opt)}
                 />
 
                 <SearchableDropdown
-                    label="Institution"
-                    options={options.institutions}
-                    placeholder="Institution..."
-                    value={institution}
-                    onChange={(opt) => handleDropdownChange('institution', opt)}
+                    label="Industry Branch"
+                    options={filteredBranches}
+                    placeholder="Industry Branch..."
+                    value={industryBranch}
+                    onChange={(opt) => handleDropdownChange('industryBranch', opt)}
+                    disabled={!industry}
+                />
+
+                <SearchableDropdown
+                    label="Role Type"
+                    options={ROLE_TYPES}
+                    placeholder="Role Type..."
+                    value={roleType}
+                    onChange={(opt) => handleDropdownChange('roleType', opt)}
                 />
             </div>
 
@@ -227,8 +187,8 @@ const CourseSpecificForm = ({ formData, onChange }) => {
             </div>
 
             {/* Column 3: Specs (33% - spanned as 4/12) */}
-            <div className="col-span-4 flex flex-col gap-4 pl-2">
-                <div className="grid grid-cols-2 gap-2">
+            <div className="col-span-4 flex flex-col gap-4 pl-2 h-full">
+                <div className="grid grid-cols-2 gap-2 shrink-0">
                     <div className="flex flex-col gap-1.5">
                         <SearchableDropdown
                             label="Currency"
@@ -265,4 +225,4 @@ const CourseSpecificForm = ({ formData, onChange }) => {
     );
 };
 
-export default CourseSpecificForm;
+export default CareerPositionForm;

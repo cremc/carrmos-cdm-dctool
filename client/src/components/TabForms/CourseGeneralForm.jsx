@@ -1,49 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import SearchableDropdown from '../SearchableDropdown';
-
-// Mock Data for Dropdowns
-const ACADEMIC_LEVELS = [
-    { value: 'undergraduate', label: 'Undergraduate' },
-    { value: 'postgraduate', label: 'Postgraduate' },
-    { value: 'diploma', label: 'Diploma' },
-    { value: 'phd', label: 'PhD' }
-];
-
-const DISCIPLINE_GROUPS = [
-    { value: 'engineering', label: 'Engineering & Technology' },
-    { value: 'medical', label: 'Medical & Health Sciences' },
-    { value: 'arts', label: 'Arts & Humanities' },
-    { value: 'business', label: 'Business & Management' }
-];
-
-const DISCIPLINES = [
-    { value: 'cs', label: 'Computer Science' },
-    { value: 'mechanical', label: 'Mechanical Engineering' },
-    { value: 'civil', label: 'Civil Engineering' },
-    { value: 'electronics', label: 'Electronics & Communication' }
-];
-
-const COUNTRIES = [
-    { value: 'india', label: 'India' },
-    { value: 'usa', label: 'USA' },
-    { value: 'uk', label: 'UK' },
-    { value: 'canada', label: 'Canada' }
-];
-
-const STATES = [
-    { value: 'karnataka', label: 'Karnataka' },
-    { value: 'maharashtra', label: 'Maharashtra' },
-    { value: 'delhi', label: 'Delhi' },
-    { value: 'tamil_nadu', label: 'Tamil Nadu' }
-];
-
-const CURRENCIES = [
-    { value: 'INR', label: 'INR' },
-    { value: 'USD', label: 'USD' },
-    { value: 'GBP', label: 'GBP' },
-    { value: 'EUR', label: 'EUR' }
-];
+import {
+    fetchAcademicLevels,
+    fetchDisciplineGroups,
+    fetchDisciplines,
+    fetchCountries,
+    fetchProvinces,
+    fetchCurrencies
+} from '../../utils/api';
 
 const CHECKBOX_OPTIONS = [
     { id: 'name', label: 'Name' },
@@ -56,7 +21,41 @@ const CHECKBOX_OPTIONS = [
     { id: 'group2', label: 'Course domain' }
 ];
 
-const CourseGeneralForm = ({ formData, onChange }) => {
+const CourseGeneralForm = ({ formData, onChange, renderActionButtons, onFocusSpecs }) => {
+    const [options, setOptions] = useState({
+        academicLevels: [],
+        disciplineGroups: [],
+        disciplines: [],
+        countries: [],
+        states: [],
+        currencies: []
+    });
+
+    useEffect(() => {
+        const loadOptions = async () => {
+            try {
+                const [academicLevels, disciplineGroups, disciplines, countries, states, currencies] = await Promise.all([
+                    fetchAcademicLevels(),
+                    fetchDisciplineGroups(),
+                    fetchDisciplines(),
+                    fetchCountries(),
+                    fetchProvinces(),
+                    fetchCurrencies()
+                ]);
+                setOptions({
+                    academicLevels,
+                    disciplineGroups,
+                    disciplines,
+                    countries,
+                    states,
+                    currencies
+                });
+            } catch (error) {
+                console.error("Error fetching dropdown options:", error);
+            }
+        };
+        loadOptions();
+    }, []);
 
     // Ensure nested state exists
     const {
@@ -64,10 +63,30 @@ const CourseGeneralForm = ({ formData, onChange }) => {
         descLength, currency, otherSpecs
     } = formData || {};
 
+    // Filter disciplines based on selected group
+    const filteredDisciplines = disciplineGroup
+        ? options.disciplines.filter(d => d.disciplineGroupId === disciplineGroup.value)
+        : options.disciplines;
+
+    // Filter states based on selected country
+    const filteredStates = country
+        ? options.states.filter(s => s.countryId === country.value)
+        : options.states;
+
     const handleDropdownChange = (field, option) => {
+        const updates = { [field]: option };
+
+        // Reset dependent fields
+        if (field === 'disciplineGroup') {
+            updates.discipline = null;
+        }
+        if (field === 'country') {
+            updates.state = null;
+        }
+
         onChange({
             ...formData,
-            [field]: option
+            ...updates
         });
     };
 
@@ -90,11 +109,11 @@ const CourseGeneralForm = ({ formData, onChange }) => {
 
     return (
         <div className="grid grid-cols-12 gap-6 h-full p-1">
-            {/* Column 1: Dropdowns (40% - spanned as 5/12) */}
-            <div className="col-span-5 flex flex-col gap-4 overflow-y-auto pr-2">
+            {/* Column 1: Dropdowns (25% - spanned as 3/12) */}
+            <div className="col-span-3 flex flex-col gap-4 overflow-y-auto pr-2">
                 <SearchableDropdown
                     label="Academic Level"
-                    options={ACADEMIC_LEVELS}
+                    options={options.academicLevels}
                     placeholder="Academic Level..."
                     value={academicLevel}
                     onChange={(opt) => handleDropdownChange('academicLevel', opt)}
@@ -104,7 +123,7 @@ const CourseGeneralForm = ({ formData, onChange }) => {
                     <div className="flex-1">
                         <SearchableDropdown
                             label="Discipline Group"
-                            options={DISCIPLINE_GROUPS}
+                            options={options.disciplineGroups}
                             placeholder="Discipline Group..."
                             value={disciplineGroup}
                             onChange={(opt) => handleDropdownChange('disciplineGroup', opt)}
@@ -114,38 +133,40 @@ const CourseGeneralForm = ({ formData, onChange }) => {
 
                 <SearchableDropdown
                     label="Discipline"
-                    options={DISCIPLINES}
+                    options={filteredDisciplines}
                     placeholder="Discipline..."
                     value={discipline}
                     onChange={(opt) => handleDropdownChange('discipline', opt)}
+                    disabled={!disciplineGroup}
                 />
 
                 <div className="grid grid-cols-2 gap-2">
                     <SearchableDropdown
                         label="Country"
-                        options={COUNTRIES}
+                        options={options.countries}
                         placeholder="Country..."
                         value={country}
                         onChange={(opt) => handleDropdownChange('country', opt)}
                     />
                     <SearchableDropdown
                         label="State/Prov"
-                        options={STATES}
+                        options={filteredStates}
                         placeholder="State/Prov..."
                         value={state}
                         onChange={(opt) => handleDropdownChange('state', opt)}
+                        disabled={!country}
                     />
                 </div>
             </div>
 
-            {/* Column 2: Checkboxes (30% - spanned as 4/12) */}
-            <div className="col-span-4 flex flex-col gap-4 border-l border-r border-slate-800/50 px-4">
+            {/* Column 2: Checkboxes (42% - spanned as 5/12) */}
+            <div className="col-span-5 flex flex-col gap-4 border-l border-r border-slate-800/50 px-4">
                 <div className="flex flex-col gap-3 mt-2">
                     <div className="grid grid-cols-2 gap-x-2 gap-y-3">
                         {CHECKBOX_OPTIONS.map(opt => (
-                            <label key={opt.id} className="flex items-start gap-2 cursor-pointer group">
+                            <label key={opt.id} className="flex items-center gap-2 cursor-pointer group w-full" title={opt.label}>
                                 <div className={`
-                                    w-4 h-4 rounded border flex items-center justify-center mt-0.5 transition-colors
+                                    w-4 h-4 rounded border flex items-center justify-center transition-colors shrink-0
                                     ${selectedCheckboxes?.[opt.id]
                                         ? 'bg-primary border-primary text-white'
                                         : 'border-slate-600 bg-slate-800 group-hover:border-slate-500'}
@@ -158,7 +179,9 @@ const CourseGeneralForm = ({ formData, onChange }) => {
                                         onChange={() => handleCheckboxChange(opt.id)}
                                     />
                                 </div>
-                                <span className={`text-sm leading-tight ${selectedCheckboxes?.[opt.id] ? 'text-slate-200' : 'text-slate-500'}`}>
+                                <span
+                                    className={`text-sm leading-tight text-left truncate flex-1 min-w-0 ${selectedCheckboxes?.[opt.id] ? 'text-slate-200' : 'text-slate-500'}`}
+                                >
                                     {opt.label}
                                 </span>
                             </label>
@@ -167,24 +190,20 @@ const CourseGeneralForm = ({ formData, onChange }) => {
                 </div>
             </div>
 
-            {/* Column 3: Specs (30% - spanned as 3/12) */}
-            <div className="col-span-3 flex flex-col gap-4 pl-2">
+            {/* Column 3: Specs (33% - spanned as 4/12) */}
+            <div className="col-span-4 flex flex-col gap-4 pl-2">
                 <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Currency</label>
-                        <div className="relative">
-                            <select
-                                className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-300 focus:border-primary focus:outline-none appearance-none"
-                                value={currency || 'INR'}
-                                onChange={(e) => handleSpecChange('currency', e.target.value)}
-                            >
-                                {CURRENCIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
-                            </select>
-                            <ChevronDown className="absolute right-2 top-2.5 text-slate-500 pointer-events-none" size={16} />
-                        </div>
+                        <SearchableDropdown
+                            label="Currency"
+                            options={options.currencies}
+                            placeholder="Currency..."
+                            value={options.currencies.find(c => c.value === (currency || 'INR')) || { value: 'INR', label: 'INR' }}
+                            onChange={(opt) => handleSpecChange('currency', opt.value)}
+                        />
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Desc Length</label>
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Desc Length</label>
                         <input
                             type="text"
                             value={descLength || '15 to 25 words'}
@@ -194,15 +213,20 @@ const CourseGeneralForm = ({ formData, onChange }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-1.5 flex-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Other Specs</label>
-                    <textarea
-                        className="w-full flex-1 bg-slate-900 border border-slate-700 rounded p-3 text-sm text-slate-300 focus:border-primary focus:outline-none resize-none placeholder:text-slate-600"
-                        placeholder="Enter custom constraints..."
-                        value={otherSpecs || ''}
-                        onChange={(e) => handleSpecChange('otherSpecs', e.target.value)}
-                    ></textarea>
+                <div className="flex flex-col gap-1.5 flex-1 mt-auto pb-4 relative">
+                    <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Other Specs</label>
+                    <div className="relative w-full h-[42px]">
+                        <textarea
+                            className="absolute top-0 left-0 w-full h-[42px] focus:h-[240px] focus:-top-[198px] z-10 focus:z-[60] bg-slate-900 border border-slate-700 rounded py-2 px-3 text-sm text-slate-500 focus:text-slate-300 focus:border-primary focus:outline-none resize-none placeholder:text-slate-600 transition-all duration-300 shadow-lg"
+                            placeholder="Constraints..."
+                            value={otherSpecs || ''}
+                            onChange={(e) => handleSpecChange('otherSpecs', e.target.value)}
+                            onFocus={onFocusSpecs}
+                        ></textarea>
+                    </div>
                 </div>
+
+                {renderActionButtons && renderActionButtons()}
             </div>
         </div>
     );

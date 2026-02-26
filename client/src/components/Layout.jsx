@@ -4,7 +4,7 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 
 const Layout = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const [isPinned, setIsPinned] = React.useState(true); // Default to pinned as per current behavior
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -24,13 +24,15 @@ const Layout = () => {
             />
             <main style={{
                 flex: 1,
-                marginLeft: `calc(${sidebarSpace} + 32px)`, // width + 32px left gap to prevent overlap
+                marginLeft: `calc(${sidebarSpace} + 20px)`, // width + 20px left gap to prevent overlap
                 marginRight: '16px',
                 paddingTop: '16px',
                 paddingBottom: '16px',
                 display: 'flex',
                 flexDirection: 'column',
-                transition: 'margin-left 0.3s ease'
+                transition: 'margin-left 0.3s ease',
+                minWidth: 0, // Critical: Allows flex child to shrink below content size
+                overflowX: 'hidden' // Critical: Prevents page-level scroll causing overlap
             }}>
                 <Header />
                 <div className="glass-panel" style={{

@@ -35,3 +35,7 @@ c. institution.py
   In class AssociationAccreditationAffiliation:
     1. Perhaps we should change aaa_type_id to aaa_type. For now, the values can be only be 'Association', 'Accreditation' or 'Affiliation' 
 	aaa_type_id = Column(String(100))    #enum
+
+
+Email: dbadmin@carrmos.com
+Password: password123

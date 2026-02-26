@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrmos Data Collector - Data Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111418",
+                        "surface-dark": "#1e242b",
+                        "border-dark": "#293038",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111418; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #293038; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e4854; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full flex-col">
+<header class="flex items-center justify-between border-b border-border-dark bg-background-dark px-6 py-0 h-16 shrink-0 z-20">
+<div class="flex items-center gap-8 h-full">
+<div class="flex items-center gap-3 text-white mr-4">
+<div class="size-8 flex items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] whitespace-nowrap">Carrmos Data Collector</h2>
+</div>
+<nav class="flex h-full items-center">
+<a class="flex items-center px-4 h-full text-slate-400 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors border-b-2 border-transparent" href="#">
+                    Dashboard
+                </a>
+<a class="flex items-center px-4 h-full text-white border-b-2 border-primary bg-primary/5 text-sm font-medium transition-colors" href="#">
+                    Data Review
+                </a>
+<a class="flex items-center px-4 h-full text-slate-400 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors border-b-2 border-transparent" href="#">
+                    Data QC
+                </a>
+<a class="flex items-center px-4 h-full text-slate-400 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors border-b-2 border-transparent" href="#">
+                    Data Relate
+                </a>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<button class="group flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 hover:bg-border-dark text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="group flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 hover:bg-border-dark text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-border-dark ml-2">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-white">Vikram Sethi</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Data Manager</p>
+</div>
+<button class="group relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-border-dark hover:ring-primary transition-all" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmy__ETzCL8APGD3EkmJ-HFV0mkVV6siBYFp_af_vhPMxDsPuNownQwjuTOUMh7bTdMtwiTarBua90uExVRD5SxK6f0azTjYZ_zkk77EWBCvUpWcleH4H4ew7Kz6VQ6DYnGmSGsyi96EKLKTiG0J68GzC70yTFdUXbpKpoYlTYCnJMqXeHeWcd8fyMTLoeqfnXP-q_UxtD8U5yFmP72MvcVhpdenrFxXQjiibURCHenmYlYg6jXxGXqsbIo3CgBWrrgDTQ7iI4Lw");'></div>
+</button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<main class="flex-1 overflow-hidden flex flex-col bg-background-dark relative">
+<div class="shrink-0 px-6 py-6 border-b border-border-dark bg-background-dark/50 backdrop-blur-sm z-10">
+<div class="flex items-center gap-2 mb-2">
+<a class="text-slate-400 text-sm hover:text-white transition-colors" href="#">Home</a>
+<span class="text-slate-600 text-sm">/</span>
+<a class="text-slate-400 text-sm hover:text-white transition-colors" href="#">Data Management</a>
+<span class="text-slate-600 text-sm">/</span>
+<span class="text-white text-sm font-medium">User Administration</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div>
+<h1 class="text-white text-3xl font-bold tracking-tight">Data Manager</h1>
+<p class="text-slate-400 mt-1 text-sm">Career Planning and Development solutions data collection management interface.</p>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-5 bg-primary hover:bg-primary/90 text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+<span>Add New User</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<div class="flex-[0.65] flex flex-col min-w-0 overflow-hidden border-r border-border-dark">
+<div class="p-4 border-b border-border-dark flex gap-3 items-center">
+<div class="relative flex-1 max-w-md">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 bg-surface-dark border border-border-dark rounded-lg leading-5 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Search data points..." type="text"/>
+</div>
+<div class="flex gap-2">
+<select class="form-select block w-full pl-3 pr-10 py-2 text-sm bg-surface-dark border border-border-dark text-white rounded-lg focus:ring-primary focus:border-primary">
+<option>All Roles</option>
+<option>Data Manager</option>
+<option>QC Checker</option>
+<option>Data Collector</option>
+</select>
+<select class="form-select block w-full pl-3 pr-10 py-2 text-sm bg-surface-dark border border-border-dark text-white rounded-lg focus:ring-primary focus:border-primary">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Disabled</option>
+</select>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-border-dark">
+<th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">User</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Role</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Access Scope</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark">
+<tr class="group hover:bg-surface-dark/50 transition-colors bg-surface-dark border-l-4 border-l-primary">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDRJP2PmVOJPcgBS1S7NPz04BE8Ohf3LM1F1LSGjwY_A7Vf8taGNbLJtSbqyVXjjdTrLbG-q3oOO9J5vgVhAiKc0p-z6CM5cWV8Ves0y-4H3KB_1BnwFUa7BOZ8KXDo7W4-mYjrQJEllRCkmjczDC1VsHrqMXkJUNADZl79Bl_EUeSeEhkRA5iD2ICcSvOzP5kaqQjJBEqOHAHoP6oFuUlB2R7Mdg26_gpA5aF-LcXZrYiMFflz3uz_DQhoRfJioiFndx-Ww97enA");'></div>
+<div>
+<div class="text-sm font-medium text-white">Aditi Sharma</div>
+<div class="text-xs text-slate-400">a.sharma@cpdsolutions.in</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/30 text-purple-400 border border-purple-800">QC Checker</span>
+</td>
+<td class="py-3 px-4">
+<div class="text-sm text-slate-300">West Zone</div>
+<div class="text-xs text-slate-500">Maharashtra, Gujarat</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-900/30 text-green-400">
+<span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-slate-400 hover:text-white mx-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-slate-400 hover:text-red-400 mx-1"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-dark transition-colors border-l-4 border-l-transparent">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-white">RK</div>
+<div>
+<div class="text-sm font-medium text-white">Rajesh Kumar</div>
+<div class="text-xs text-slate-400">r.kumar@cpdsolutions.in</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300 border border-slate-600">Data Collector</span>
+</td>
+<td class="py-3 px-4">
+<div class="text-sm text-slate-300">North Zone</div>
+<div class="text-xs text-slate-500">Delhi NCR</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-900/30 text-green-400">
+<span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5"></span>
+                                            Active
+                                        </span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-slate-400 hover:text-white mx-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-border-dark flex items-center justify-between text-xs text-slate-400">
+<span>Showing 1 to 4 of 24 entries</span>
+<div class="flex gap-1">
+<button class="px-2 py-1 rounded bg-surface-dark border border-border-dark hover:text-white hover:border-slate-500">Previous</button>
+<button class="px-2 py-1 rounded bg-primary text-white border border-primary">1</button>
+<button class="px-2 py-1 rounded bg-surface-dark border border-border-dark hover:text-white hover:border-slate-500">2</button>
+<button class="px-2 py-1 rounded bg-surface-dark border border-border-dark hover:text-white hover:border-slate-500">Next</button>
+</div>
+</div>
+</div>
+<div class="flex-[0.35] bg-surface-dark flex flex-col border-l border-border-dark shrink-0 shadow-xl z-10 overflow-hidden">
+<div class="flex border-b border-border-dark bg-background-dark/30">
+<button class="flex-1 px-4 py-4 text-sm font-semibold text-primary border-b-2 border-primary bg-primary/5">Create User</button>
+<button class="flex-1 px-4 py-4 text-sm font-medium text-slate-400 hover:text-white border-b-2 border-transparent hover:bg-white/5 transition-colors">Manage Access</button>
+<button class="flex-1 px-4 py-4 text-sm font-medium text-slate-400 hover:text-white border-b-2 border-transparent hover:bg-white/5 transition-colors">Manage Tasks</button>
+</div>
+<div class="flex-1 overflow-y-auto">
+<div class="p-6 space-y-6">
+<div class="grid grid-cols-1 gap-5">
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">User Email</label>
+<input class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="e.g. user@cpdsolutions.in" type="email"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Generated Password</label>
+<div class="relative">
+<input class="w-full bg-background-dark/50 border border-border-dark rounded-lg px-4 py-2.5 text-sm text-slate-300 focus:outline-none cursor-not-allowed" readonly="" type="text" value="CPD_78XyZ_2024"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+<p class="text-[10px] text-slate-500 mt-1">Auto-generated for security. Share with user via secure channel.</p>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">DB Role</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option value="">Select Role</option>
+<option>Data Manager</option>
+<option>QC Checker</option>
+<option>Data Collector</option>
+<option>Viewer</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">First Name</label>
+<input class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="John" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Last Name</label>
+<input class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Doe" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Access Region</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option value="">Select Region</option>
+<option>North Zone (Delhi NCR, Punjab)</option>
+<option>West Zone (MH, GJ, GA)</option>
+<option>South Zone (KA, TN, KL)</option>
+<option>East Zone (WB, OR, JH)</option>
+<option>Central Zone (MP, CG)</option>
+<option>Pan India</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Status</label>
+<select class="w-full bg-background-dark border border-border-dark rounded-lg px-4 py-2.5 text-sm text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>Active</option>
+<option>On Hold</option>
+<option>Disabled</option>
+</select>
+</div>
+</div>
+</div>
+<div class="hidden p-10 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-slate-600 mb-2">pending</span>
+<p class="text-slate-500">Manage Access controls will appear here.</p>
+</div>
+</div>
+<div class="p-5 border-t border-border-dark bg-background-dark flex justify-end gap-3">
+<button class="px-4 py-2 rounded-lg border border-border-dark text-slate-300 text-sm font-medium hover:bg-border-dark transition-colors">Clear Form</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">Create User</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

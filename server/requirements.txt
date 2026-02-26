@@ -10,3 +10,13 @@ cryptography
 python-jose[cryptography]
 passlib
 bcrypt==3.2.0
+langchain
+langchain-openai
+langchain-community
+openai
+google-generativeai
+langchain-google-genai
+httplib2==0.22.0
+pyparsing==2.4.7
+pandas
+openpyxl

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrmos Data Collector - AI Career Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0e7690",
+                        "background-light": "#f8fafb",
+                        "background-dark": "#131925",
+                        "panel-dark": "#1c2426",
+                        "border-dark": "#3c4e53",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for technical look */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #131925; }
+        ::-webkit-scrollbar-thumb { background: #3c4e53; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0e7690; }
+
+        input[type="checkbox"] {
+            --checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');
+        }
+        select {
+            --select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(157,179,184)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e');
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-border-dark bg-background-dark px-6 py-3 h-16 shrink-0">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1 rounded">
+<svg class="size-6 text-white" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-white text-lg font-bold tracking-tight uppercase">Carrmos <span class="text-primary font-light">Data Collector</span></h1>
+</div>
+<nav class="flex items-center gap-6 ml-4">
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">History</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-border-dark text-lg">search</span>
+<input class="bg-panel-dark border border-border-dark rounded-lg pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary focus:outline-none placeholder:text-border-dark" placeholder="Search parameters..." type="text"/>
+</div>
+<div class="h-8 w-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVuFMdQHsGBu1HUvg-1RdALjXQH2KtN04L6EWvPYUcq_5kAh-elW7G90bK1Gy9_nnwyF15RVmEyBazGRE97oSEy7WNTBZJqkLeFA4kINkB3K3kE-A-_I22uk6AJ7f1cAGUW1s9Jl9ZDmS8Zy3JfPjNgi86XPZuXjh91ycM77hJYLveGqyRTbEJyl9hT4d9B3ksISWkG1YfF2w44i3F6dClKcHVUi92EzZ7thfI6uxRTEhTiPpyVpx8uoTMF9mYaE222yMxBfbpPA"/>
+</div>
+</div>
+</header>
+<!-- Tabs Container -->
+<div class="bg-background-dark px-6 border-b border-border-dark shrink-0">
+<div class="flex gap-8 overflow-x-auto no-scrollbar">
+<a class="flex flex-col items-center justify-center border-b-2 border-primary text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Course</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Career Position</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Prerequisites</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Skills</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">ETs</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Institutions</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Certifications</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Core Subjects</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-border-dark hover:text-white py-3 transition-all shrink-0" href="#">
+<p class="text-sm font-bold tracking-wide">Others</p>
+</a>
+</div>
+</div>
+<!-- Main Workspace -->
+<main class="flex flex-col flex-grow overflow-hidden">
+<!-- Top Control Zone (30%) -->
+<div class="flex h-[35%] min-h-[320px] border-b border-border-dark">
+<!-- Prompt Panel (85%) -->
+<div class="w-[85%] bg-background-dark/50 p-6 flex flex-col relative">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<h2 class="text-xs font-bold tracking-[0.2em] text-border-dark uppercase">Prompt Configuration</h2>
+</div>
+<div class="grid grid-cols-3 gap-8 flex-grow">
+<!-- Column 1: Metadata Dropdowns -->
+<div class="space-y-3 overflow-y-auto pr-2">
+<div class="group">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Academic Level</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 focus:ring-1 focus:ring-primary appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>Postgraduate</option>
+<option>Undergraduate</option>
+<option>Diploma</option>
+</select>
+</div>
+<div class="group">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Discipline Group</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 focus:ring-1 focus:ring-primary appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>Engineering &amp; Technology</option>
+<option>Management</option>
+<option>Humanities</option>
+</select>
+</div>
+<div class="flex gap-2">
+<div class="flex-1">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Country</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 focus:ring-1 focus:ring-primary appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>India</option>
+<option>USA</option>
+</select>
+</div>
+<div class="flex-1">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">State/Prov</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 focus:ring-1 focus:ring-primary appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>Karnataka</option>
+<option>Maharashtra</option>
+</select>
+</div>
+</div>
+<div class="group">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Institution Category</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 focus:ring-1 focus:ring-primary appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>Premier Private</option>
+<option>Public University</option>
+</select>
+</div>
+</div>
+<!-- Column 2: Extraction Checkboxes -->
+<div class="bg-panel-dark/30 border border-border-dark/50 rounded-xl p-4 overflow-y-auto">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-3">Extraction Targets</label>
+<div class="grid grid-cols-2 gap-x-4 gap-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Name</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Description</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Duration</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Rigour</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Tuition</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Prospects</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Group 1</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="h-4 w-4 rounded border-border-dark bg-transparent text-primary focus:ring-0 checked:bg-[image:--checkbox-tick-svg]" type="checkbox"/>
+<span class="text-xs text-white/70 group-hover:text-white transition-colors">Group 2</span>
+</label>
+</div>
+</div>
+<!-- Column 3: Parameters & Specs -->
+<div class="space-y-3">
+<div class="flex gap-4">
+<div class="w-1/3">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Currency</label>
+<select class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 appearance-none bg-[image:--select-button-svg] bg-[position:right_8px_center] bg-no-repeat">
+<option>INR</option>
+<option>USD</option>
+<option>EUR</option>
+</select>
+</div>
+<div class="flex-grow">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Desc Length</label>
+<input class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90" type="text" value="15 to 25 words"/>
+</div>
+</div>
+<div class="flex-grow">
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-1">Other Specs</label>
+<textarea class="w-full bg-panel-dark border border-border-dark rounded-lg text-sm p-2 text-white/90 h-24 resize-none" placeholder="Enter custom constraints..."></textarea>
+</div>
+</div>
+</div>
+<!-- Prompt Panel Buttons -->
+<div class="absolute bottom-6 right-6 flex gap-3">
+<button class="px-4 py-2 border border-border-dark text-border-dark hover:text-white hover:border-white text-xs font-bold uppercase transition-all rounded">Clear</button>
+<button class="px-4 py-2 border border-border-dark text-border-dark hover:text-white hover:border-white text-xs font-bold uppercase transition-all rounded">Copy</button>
+<button class="px-8 py-2 bg-primary text-white text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(14,118,144,0.3)] hover:shadow-[0_0_25px_rgba(14,118,144,0.5)] transition-all rounded flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+                        Run Engine
+                    </button>
+</div>
+</div>
+<!-- Selection Panel (15%) -->
+<div class="w-[15%] border-l border-border-dark bg-background-dark/80 p-6 flex flex-col justify-between">
+<div>
+<label class="block text-[10px] font-bold text-border-dark uppercase mb-4 tracking-widest">Model Engine</label>
+<div class="space-y-2">
+<button class="w-full bg-primary/20 border border-primary text-primary text-left px-3 py-2 text-xs font-bold rounded flex items-center justify-between">
+                            GPT-4o
+                            <span class="material-symbols-outlined text-[14px]">check_circle</span>
+</button>
+<button class="w-full bg-panel-dark border border-border-dark text-white/40 text-left px-3 py-2 text-xs font-bold rounded hover:border-border-dark/80 transition-all">
+                            Claude 3.5
+                        </button>
+<button class="w-full bg-panel-dark border border-border-dark text-white/40 text-left px-3 py-2 text-xs font-bold rounded hover:border-border-dark/80 transition-all">
+                            Gemini Pro
+                        </button>
+<button class="w-full bg-panel-dark border border-border-dark text-white/40 text-left px-3 py-2 text-xs font-bold rounded hover:border-border-dark/80 transition-all">
+                            Llama 3 70B
+                        </button>
+</div>
+</div>
+<div class="space-y-2 pt-4 border-t border-border-dark/50">
+<button class="w-full py-2 bg-panel-dark border border-border-dark text-border-dark text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-2 hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">key</span>
+                        API Keys
+                    </button>
+<button class="w-full py-2 bg-panel-dark border border-border-dark text-border-dark text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-2 hover:text-white transition-all">
+<span class="material-symbols-outlined text-sm">bar_chart</span>
+                        Usage
+                    </button>
+</div>
+</div>
+</div>
+<!-- Data Panel (70%) -->
+<div class="flex-grow flex flex-col bg-[#0f141d] p-6 relative overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">database</span>
+<h2 class="text-xs font-bold tracking-[0.2em] text-border-dark uppercase">AI Generation Output</h2>
+<span class="ml-4 px-2 py-0.5 bg-primary/10 border border-primary/20 text-primary text-[10px] rounded uppercase font-bold">12 results generated</span>
+</div>
+<div class="flex gap-4">
+<button class="text-border-dark hover:text-white flex items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span class="text-[10px] font-bold uppercase">Filter</span>
+</button>
+<button class="text-border-dark hover:text-white flex items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+<span class="text-[10px] font-bold uppercase">Export</span>
+</button>
+</div>
+</div>
+<!-- Data Grid -->
+<div class="flex-grow border border-border-dark rounded-xl overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse table-fixed">
+<thead class="bg-background-dark/80 sticky top-0 border-b border-border-dark">
+<tr>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-12 text-center">#</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-48">Course Name</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-64">Description</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-24">Duration</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-32">Tuition (INR)</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase">Core Skills</th>
+<th class="p-3 text-[10px] font-bold text-border-dark uppercase w-24 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark/30">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 group">
+<td class="p-3 text-xs text-border-dark font-mono text-center">01</td>
+<td class="p-3 text-xs font-medium text-white/90 outline-none focus:bg-primary/10" contenteditable="true">B.Tech Computer Science (AI)</td>
+<td class="p-3 text-xs text-white/60 leading-relaxed outline-none focus:bg-primary/10" contenteditable="true">Foundation in neural networks and machine learning frameworks for modern engineering.</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">4 Years</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">12,50,000</td>
+<td class="p-3">
+<div class="flex gap-1 flex-wrap">
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">Python</span>
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">PyTorch</span>
+</div>
+</td>
+<td class="p-3 text-center">
+<button class="material-symbols-outlined text-border-dark hover:text-white text-lg">edit_note</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 group">
+<td class="p-3 text-xs text-border-dark font-mono text-center">02</td>
+<td class="p-3 text-xs font-medium text-white/90 outline-none focus:bg-primary/10" contenteditable="true">M.Sc Data Science &amp; Analytics</td>
+<td class="p-3 text-xs text-white/60 leading-relaxed outline-none focus:bg-primary/10" contenteditable="true">Advanced statistical modeling and business intelligence for corporate decision support.</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">2 Years</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">8,00,000</td>
+<td class="p-3">
+<div class="flex gap-1 flex-wrap">
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">Statistics</span>
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">SQL</span>
+</div>
+</td>
+<td class="p-3 text-center">
+<button class="material-symbols-outlined text-border-dark hover:text-white text-lg">edit_note</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 group">
+<td class="p-3 text-xs text-border-dark font-mono text-center">03</td>
+<td class="p-3 text-xs font-medium text-white/90 outline-none focus:bg-primary/10" contenteditable="true">B.Des Interaction Design</td>
+<td class="p-3 text-xs text-white/60 leading-relaxed outline-none focus:bg-primary/10" contenteditable="true">UX focus on digital ecosystems and hardware-software integration for consumer electronics.</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">4 Years</td>
+<td class="p-3 text-xs text-white/90 outline-none focus:bg-primary/10" contenteditable="true">15,00,000</td>
+<td class="p-3">
+<div class="flex gap-1 flex-wrap">
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">Figma</span>
+<span class="px-1.5 py-0.5 bg-panel-dark text-border-dark text-[9px] rounded uppercase font-bold border border-border-dark/50">Research</span>
+</div>
+</td>
+<td class="p-3 text-center">
+<button class="material-symbols-outlined text-border-dark hover:text-white text-lg">edit_note</button>
+</td>
+</tr>
+<!-- Empty states to show density -->
+<tr class="border-none">
+<td class="h-32 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(60,78,83,0.05)_10px,rgba(60,78,83,0.05)_11px)]" colspan="7"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Data Panel Footer Buttons -->
+<div class="absolute bottom-10 right-10 flex gap-4">
+<button class="px-6 py-2 border border-border-dark text-border-dark hover:text-white text-xs font-bold uppercase transition-all rounded bg-background-dark/50 backdrop-blur-sm">Clear Board</button>
+<button class="px-6 py-2 border border-border-dark text-border-dark hover:text-white text-xs font-bold uppercase transition-all rounded bg-background-dark/50 backdrop-blur-sm">Copy Batch</button>
+<button class="px-8 py-3 bg-white text-background-dark text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm font-bold">publish</span>
+                    Push to Staging
+                </button>
+</div>
+</div>
+</main>
+</body></html>

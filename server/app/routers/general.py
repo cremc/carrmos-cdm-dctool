@@ -49,7 +49,10 @@ def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)
 
 @router.get("/countries/", response_model=List[schemas.Country])
 def read_countries(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_countries(db, skip=skip, limit=limit)
+    print("Reading countries...")
+    list = crud.get_countries(db, skip=skip, limit=limit)
+    print (list[:5])
+    return list
 
 @router.get("/countries/{country_id}", response_model=schemas.Country)
 def read_country(country_id: int, db: Session = Depends(get_db)):
@@ -79,7 +82,10 @@ def create_province_or_state(province_or_state: schemas.ProvinceOrStateCreate, d
 
 @router.get("/provinces/", response_model=List[schemas.ProvinceOrState])
 def read_provinces_or_states(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_provinces_or_states(db, skip=skip, limit=limit)
+    print("Reading provinces...")
+    list = crud.get_provinces_or_states(db, skip=skip, limit=limit)
+    print (list[:5])
+    return list
 
 @router.get("/provinces/{province_or_state_id}", response_model=schemas.ProvinceOrState)
 def read_province_or_state(province_or_state_id: int, db: Session = Depends(get_db)):
