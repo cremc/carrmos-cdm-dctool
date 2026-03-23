@@ -11,9 +11,9 @@ import {
     MarkerType
 } from '@xyflow/react';
 import { Edit, ChevronRight, ChevronDown, Maximize2, Minimize2, RotateCcw } from 'lucide-react';
-import SearchableDropdown from '../components/SearchableDropdown';
+import SearchableDropdown from './SearchableDropdown';
 import '@xyflow/react/dist/style.css';
-import './DataRelate.css';
+import './DataRelatePOC.css';
 
 // ------------------------------------------------------------------
 // Helper functions for Data/Styling
@@ -336,7 +336,7 @@ const mockCertData = {
 // ------------------------------------------------------------------
 // Main POC Application / Component
 // ------------------------------------------------------------------
-export default function DataRelate() {
+export default function DataRelatePOC() {
     const reactFlowWrapper = useRef(null);
     const [menu, setMenu] = useState(null);
     const [modalData, setModalData] = useState(null);
@@ -475,17 +475,8 @@ export default function DataRelate() {
         } else if (action === 'get_ext') {
             alert(`Fetching requirements via LLM for: ${nodeData.label}`);
             
-            fetch('http://localhost:8000/api/pe/datarelate/run', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    domain: menu.type === 'cg' ? 'course_general' : menu.type === 'cp' ? 'career_position' : 'others',
-                    input_data: { label: nodeData.label, type: menu.type }
-                })
-            })
-            .then(res => res.json())
-            .then((data) => {
-                const fetchedGroups = data.results || [];
+            import('../../Model_fetched_data_structure.json').then((module) => {
+                const fetchedGroups = module.default || module;
                 const newNodes = [];
                 const newEdges = [];
 
@@ -495,50 +486,33 @@ export default function DataRelate() {
                     // Mock function to check if item exists in DB
                     const checkDbMock = (label) => Math.random() > 0.5 ? 'found' : 'not-found';
 
-                    const cgVal = group.data.cg;
-                    let cgLabel = typeof cgVal === 'string' ? cgVal : (cgVal?.label || '');
-                    const cg = cgVal ? { id: `cg-${newGroupId}`, label: cgLabel, status: checkDbMock(cgLabel), isIgnored: false } : null;
-
-                    const cpVal = group.data.cp;
-                    let cpLabel = typeof cpVal === 'string' ? cpVal : (cpVal?.label || '');
-                    let cpExp = typeof cpVal === 'object' ? (cpVal?.exp || '') : '';
-                    const cp = cpVal ? { id: `cp-${newGroupId}`, label: cpLabel, exp: cpExp, status: checkDbMock(cpLabel), isIgnored: false } : null;
+                    const cg = group.data.cg ? { id: `cg-${newGroupId}`, label: group.data.cg.label, status: checkDbMock(group.data.cg.label), isIgnored: false } : null;
+                    const cp = group.data.cp ? { id: `cp-${newGroupId}`, label: group.data.cp.label, exp: group.data.cp.exp, status: checkDbMock(group.data.cp.label), isIgnored: false } : null;
                     
                     let certGroupData = { type: 'AND', items: [] };
                     if (group.data.certs && group.data.certs.length > 0) {
                         const firstCertSet = group.data.certs.find(c => c.anded_certs?.length > 0 || c.ored_certs?.length > 0) || group.data.certs[0];
                         certGroupData.type = firstCertSet.type;
                         if (firstCertSet.type === 'AND' && firstCertSet.anded_certs) {
-                            certGroupData.items = firstCertSet.anded_certs.map((c, i) => {
-                                const l = typeof c === 'string' ? c : (c.label || '');
-                                return { id: `cert-${newGroupId}-${i}`, label: l, status: checkDbMock(l), isIgnored: false };
-                            });
+                            certGroupData.items = firstCertSet.anded_certs.map((c, i) => ({ id: `cert-${newGroupId}-${i}`, label: c.label, status: checkDbMock(c.label), isIgnored: false }));
                         } else if (firstCertSet.type === 'OR' && firstCertSet.ored_certs) {
-                            certGroupData.items = firstCertSet.ored_certs.map((c, i) => {
-                                const l = typeof c === 'string' ? c : (c.label || '');
-                                return { id: `cert-${newGroupId}-${i}`, label: l, status: checkDbMock(l), isIgnored: false };
-                            });
+                            certGroupData.items = firstCertSet.ored_certs.map((c, i) => ({ id: `cert-${newGroupId}-${i}`, label: c.label, status: checkDbMock(c.label), isIgnored: false }));
                         }
                     }
 
                     const othersList = [];
                     const dOthers = group.data.others || {};
                     if (dOthers.skills && dOthers.skills.length > 0) {
-                         const str = dOthers.skills.map(s => typeof s === 'string' ? s : (s.skill_subcategory || s.skill_category || '')).join(', ');
-                         othersList.push({ id: `sk-${newGroupId}`, category: 'Skills', label: str, isIgnored: false });
+                         othersList.push({ id: `sk-${newGroupId}`, category: 'Skills', label: dOthers.skills.map(s => s.skill_subcategory || s.skill_category).join(', '), isIgnored: false });
                     }
                     if (dOthers.subjects && dOthers.subjects.length > 0) {
-                         const str = dOthers.subjects.map(s => typeof s === 'string' ? s : (s.subject_name || '')).join(', ');
-                         othersList.push({ id: `su-${newGroupId}`, category: 'Subjects', label: str, isIgnored: false });
+                         othersList.push({ id: `su-${newGroupId}`, category: 'Subjects', label: dOthers.subjects.map(s => s.subject_name).join(', '), isIgnored: false });
                     }
                     if (dOthers.ET && dOthers.ET !== 'none') {
                          othersList.push({ id: `et-${newGroupId}`, category: 'ETs', label: dOthers.ET, isIgnored: false });
                     }
                     if (dOthers.other_reqs && dOthers.other_reqs.length > 0) {
-                         const count = dOthers.other_reqs.reduce((acc, reqGroup) => 
-                             acc + (reqGroup.anded_other_reqs?.length || 0) + (reqGroup.ored_other_reqs?.length || 0)
-                         , 0) || dOthers.other_reqs.length;
-                         othersList.push({ id: `or-${newGroupId}`, category: 'Other Reqs', label: count + ' requirements', isIgnored: false });
+                         othersList.push({ id: `or-${newGroupId}`, category: 'Other Reqs', label: dOthers.other_reqs.length + ' requirements', isIgnored: false });
                     }
 
                     const newNode = {
@@ -573,7 +547,7 @@ export default function DataRelate() {
                 setNodes((nds) => [...nds, ...newNodes]);
                 setEdges((eds) => [...eds, ...newEdges]);
             }).catch(err => {
-                console.error("Failed to load LLM data", err);
+                console.error("Failed to load mock data", err);
             });
             
         } else if (action.startsWith('get_')) {

@@ -1,0 +1,143 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "data": {
+                "pathName": "BBA Admission via Commerce Stream (General)",
+                "cg": "Higher Secondary (Class 12) - Commerce",
+                "cp": "Higher Secondary Graduate",
+                "certs": [],
+                "others": {
+                    "skills": [
+                        "Basic Accounting",
+                        "Communication Skills",
+                        "Analytical Thinking",
+                        "Numerical Ability"
+                    ],
+                    "subjects": [
+                        "Accountancy",
+                        "Business Studies",
+                        "Economics",
+                        "English"
+                    ],
+                    "ET": "CUET (Common University Entrance Test)",
+                    "other_reqs": [
+                        {
+                            "type": "AND",
+                            "anded_other_reqs": [
+                                "Minimum 50% aggregate marks in Class 12",
+                                "English as a core subject"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 2,
+            "data": {
+                "pathName": "BBA Admission via Science or Arts Stream",
+                "cg": "Higher Secondary (Class 12) - Any Stream",
+                "cp": "Higher Secondary Graduate",
+                "certs": [],
+                "others": {
+                    "skills": [
+                        "Logical Reasoning",
+                        "General Awareness",
+                        "Verbal Ability",
+                        "Leadership Qualities"
+                    ],
+                    "subjects": [
+                        "English",
+                        "Mathematics or Applied Mathematics",
+                        "General Test"
+                    ],
+                    "ET": "SET (Symbiosis Entrance Test) OR NPAT (NMIMS Programs After Twelfth)",
+                    "other_reqs": [
+                        {
+                            "type": "OR",
+                            "ored_other_reqs": [
+                                "Minimum 60% aggregate in Class 12 for Private Universities",
+                                "Mathematics as a mandatory subject in Class 12 for specific institutions"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 3,
+            "data": {
+                "pathName": "Integrated Program in Management (IPM) Route",
+                "cg": "Higher Secondary (Class 12)",
+                "cp": "Management Aspirant",
+                "certs": [],
+                "others": {
+                    "skills": [
+                        "Advanced Quantitative Aptitude",
+                        "Data Interpretation",
+                        "Critical Reasoning",
+                        "Public Speaking"
+                    ],
+                    "subjects": [
+                        "Mathematics",
+                        "English Proficiency",
+                        "Logical Reasoning"
+                    ],
+                    "ET": "IPMAT (IIM Indore/Rohtak) OR JIPMAT",
+                    "other_reqs": [
+                        {
+                            "type": "AND",
+                            "anded_other_reqs": [
+                                "Age limit usually below 20 years",
+                                "Minimum 60% in Class 10 and Class 12",
+                                "Clearance of Personal Interview (PI) round"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 4,
+            "data": {
+                "pathName": "BBA in Digital Marketing / Specialized Niches",
+                "cg": "Higher Secondary (Class 12)",
+                "cp": "Higher Secondary Graduate",
+                "certs": [
+                    {
+                        "type": "OR",
+                        "ored_certs": [
+                            "Google Digital Marketing Certification",
+                            "HubSpot Content Marketing Certification",
+                            "Microsoft Office Specialist (Excel)"
+                        ]
+                    }
+                ],
+                "others": {
+                    "skills": [
+                        "Digital Literacy",
+                        "Creative Writing",
+                        "Social Media Management",
+                        "Basic Statistics"
+                    ],
+                    "subjects": [
+                        "English",
+                        "Informatics Practices",
+                        "Mathematics"
+                    ],
+                    "ET": "AIMA UGAT (Under Graduate Aptitude Test)",
+                    "other_reqs": [
+                        {
+                            "type": "AND",
+                            "anded_other_reqs": [
+                                "Proficiency in Computer Applications",
+                                "Minimum 45-50% in Class 12"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

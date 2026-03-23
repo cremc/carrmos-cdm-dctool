@@ -3,6 +3,7 @@ from typing import Dict, Any, List, Optional
 from pydantic import BaseModel
 
 from ..pe_module.service import pe_service, engineer_prompt, load_prompt_config, save_prompt_config
+from ..pe_module.datarelate_service import pe_datarelate_service
 
 router = APIRouter(
     prefix="/pe",
@@ -33,6 +34,23 @@ def run_engine(request: RunEngineRequest):
     try:
         print("Data: ", request.input_data)
         data = pe_service.run_engine(
+            input_data=request.input_data, 
+            domain=request.domain,
+            api_key=request.api_key
+        )
+        
+        return {"results": data}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/datarelate/run", response_model=RunEngineResponse)
+def run_datarelate_engine(request: RunEngineRequest):
+    """
+    Triggers the Prompt Engineering module to generate Data Relate structures via LLM based on node type.
+    """
+    try:
+        print("DataRelate Request: ", request.input_data)
+        data = pe_datarelate_service.run_engine(
             input_data=request.input_data, 
             domain=request.domain,
             api_key=request.api_key

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import axios from 'axios';
 import {
     ReactFlow,
     useNodesState,
@@ -11,9 +12,9 @@ import {
     MarkerType
 } from '@xyflow/react';
 import { Edit, ChevronRight, ChevronDown, Maximize2, Minimize2, RotateCcw } from 'lucide-react';
-import SearchableDropdown from '../components/SearchableDropdown';
+import SearchableDropdown from './SearchableDropdown';
 import '@xyflow/react/dist/style.css';
-import './DataRelate.css';
+import './DataRelatePOC.css';
 
 // ------------------------------------------------------------------
 // Helper functions for Data/Styling
@@ -336,7 +337,7 @@ const mockCertData = {
 // ------------------------------------------------------------------
 // Main POC Application / Component
 // ------------------------------------------------------------------
-export default function DataRelate() {
+export default function DataRelatePOC() {
     const reactFlowWrapper = useRef(null);
     const [menu, setMenu] = useState(null);
     const [modalData, setModalData] = useState(null);
@@ -475,17 +476,14 @@ export default function DataRelate() {
         } else if (action === 'get_ext') {
             alert(`Fetching requirements via LLM for: ${nodeData.label}`);
             
-            fetch('http://localhost:8000/api/pe/datarelate/run', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    domain: menu.type === 'cg' ? 'course_general' : menu.type === 'cp' ? 'career_position' : 'others',
-                    input_data: { label: nodeData.label, type: menu.type }
-                })
-            })
-            .then(res => res.json())
-            .then((data) => {
-                const fetchedGroups = data.results || [];
+            const domainMap = { 'cp': 'career_position', 'cg': 'course_general' };
+            const reqDomain = domainMap[menu.type] || 'course_general';
+
+            axios.post('http://localhost:8000/api/pe/datarelate/run', {
+                domain: reqDomain,
+                input_data: { label: nodeData.label }
+            }).then((response) => {
+                const fetchedGroups = response.data.results || [];
                 const newNodes = [];
                 const newEdges = [];
 
@@ -573,7 +571,8 @@ export default function DataRelate() {
                 setNodes((nds) => [...nds, ...newNodes]);
                 setEdges((eds) => [...eds, ...newEdges]);
             }).catch(err => {
-                console.error("Failed to load LLM data", err);
+                console.error("Failed to fetch data from API", err);
+                alert("Failed to fetch generated requirements from API. Check console.");
             });
             
         } else if (action.startsWith('get_')) {

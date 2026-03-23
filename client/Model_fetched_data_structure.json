@@ -1,0 +1,283 @@
+[
+    {
+        "id": "group1",
+        "data": {
+            "pathName": "cg1",
+            "cg": {
+                "id": "cg1",
+                "label": "Bachelor of Technology (CS)"
+            },
+            "cp": {
+                "id": "cp1",
+                "label": "Software Engineer",
+                "exp": "1-2 years"
+            },
+            "certs": [
+                {
+                    "type": "AND",
+                    "anded_certs": [
+                        {
+                            "id": "cert1",
+                            "label": "AWS Certified Solutions Architect"
+                        },
+                        {
+                            "id": "cert2",
+                            "label": "Google Certified Solutions Architect"
+                        }
+                    ]
+                },
+                {
+                    "type": "OR",
+                    "ored_certs": [
+                        {
+                            "id": "cert3",
+                            "label": "Microsoft Certified Solutions Architect"
+                        },
+                        {
+                            "id": "cert4",
+                            "label": "Oracle Certified Solutions Architect"
+                        }
+                    ]
+                }
+            ],
+            "others": {
+                "skills": [
+                    {
+                        "id": "skill1",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Business Presentation"
+                    },
+                    {
+                        "id": "skill2",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Writing skills"
+                    },
+                    {
+                        "id": "skill3",
+                        "skill_category": "Analytical skills",
+                        "skill_subcategory": "Attention to detail"
+                    },
+                    {
+                        "id": "skill4",
+                        "skill_category": "IT skills",
+                        "skill_subcategory": "Coding: Python"
+                    },
+                    {
+                        "id": "skill5",
+                        "skill_category": "IT skills",
+                        "skill_subcategory": "Web development"
+                    },
+                    {
+                        "id": "skill6",
+                        "skill_category": "IT skills",
+                        "skill_subcategory": "Database Management"
+                    }
+                ],
+                "subjects": [
+                    {
+                        "id": "subject1",
+                        "discipline_group": "Computer Applications and Sciences",
+                        "subject_name": "Programming in Python"
+                    },
+                    {
+                        "id": "subject2",
+                        "discipline_group": "Computer Applications and Sciences",
+                        "subject_name": "Data Structures and Algorithms"
+                    },
+                    {
+                        "id": "subject3",
+                        "discipline_group": "Computer Applications and Sciences",
+                        "subject_name": "Database Management"
+                    }
+                ],
+                "ET": "none",
+                "other_reqs": [
+                    {
+                        "type": "AND",
+                        "anded_other_reqs": [
+                            {
+                                "id": "other1",
+                                "detail": "Must be proficient in writing and decoding Excel formulas"
+                            },
+                            {
+                                "id": "other2",
+                                "detail": "Must have demonstrated extertise in frontend coding"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "OR",
+                        "ored_other_reqs": [
+                            {
+                                "id": "other3",
+                                "detail": "Must have demonstrated extertise in backend coding"
+                            },
+                            {
+                                "id": "other4",
+                                "detail": "Ideally should have DevOps experience in large web dev projects"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "group2",
+        "data": {
+            "pathName": "cg2",
+            "cg": {
+                "id": "cg2",
+                "label": "Bachelor of Computer Applications"
+            },
+            "cp": {
+                "id": "cp2",
+                "label": "Data Analyst",
+                "exp": "1-2 years"
+            },
+            "certs": [
+                {
+                    "type": "AND",
+                    "anded_certs": [
+                        {
+                            "id": "cert1",
+                            "label": "AWS Certified Solutions Architect"
+                        },
+                        {
+                            "id": "cert2",
+                            "label": "Programming bootcamp"
+                        }
+                    ]
+                },
+                {
+                    "type": "OR",
+                    "ored_certs": []
+                }
+            ],
+            "others": {
+                "skills": [
+                    {
+                        "id": "skill1",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Business Presentation"
+                    },
+                    {
+                        "id": "skill2",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Writing skills"
+                    },
+                    {
+                        "id": "skill3",
+                        "skill_category": "Analytical skills",
+                        "skill_subcategory": "Attention to detail"
+                    },
+                    {
+                        "id": "skill4",
+                        "skill_category": "IT skills",
+                        "skill_subcategory": "Coding: Python"
+                    }
+                ],
+                "subjects": [],
+                "ET": "none",
+                "other_reqs": [
+                    {
+                        "type": "AND",
+                        "anded_other_reqs": [
+                            {
+                                "id": "other1",
+                                "detail": "Must be proficient in writing and decoding Excel formulas"
+                            },
+                            {
+                                "id": "other2",
+                                "detail": "Must have demonstrated extertise in frontend coding"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "OR",
+                        "ored_other_reqs": []
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "group3",
+        "data": {
+            "pathName": "cg3",
+            "cg": {
+                "id": "cg3",
+                "label": "Bachelor of Technology (CS)"
+            },
+            "cp": {
+                "id": "cp3",
+                "label": "Data Analyst",
+                "exp": "1-2 years"
+            },
+            "certs": [
+                {
+                    "type": "AND",
+                    "anded_certs": [
+                        {
+                            "id": "cert1",
+                            "label": "AWS Certified Solutions Architect"
+                        },
+                        {
+                            "id": "cert2",
+                            "label": "Programming bootcamp"
+                        }
+                    ]
+                },
+                {
+                    "type": "OR",
+                    "ored_certs": []
+                }
+            ],
+            "others": {
+                "skills": [
+                    {
+                        "id": "skill1",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Business Presentation"
+                    },
+                    {
+                        "id": "skill2",
+                        "skill_category": "Communication skills",
+                        "skill_subcategory": "Writing skills"
+                    },
+                    {
+                        "id": "skill3",
+                        "skill_category": "Analytical skills",
+                        "skill_subcategory": "Attention to detail"
+                    },
+                    {
+                        "id": "skill4",
+                        "skill_category": "IT skills",
+                        "skill_subcategory": "Coding: Python"
+                    }
+                ],
+                "subjects": [],
+                "ET": "none",
+                "other_reqs": [
+                    {
+                        "type": "AND",
+                        "anded_other_reqs": [
+                            {
+                                "id": "other1",
+                                "detail": "Must be proficient in writing and decoding Excel formulas"
+                            },
+                            {
+                                "id": "other2",
+                                "detail": "Must have demonstrated extertise in frontend coding"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "OR",
+                        "ored_other_reqs": []
+                    }
+                ]
+            }
+        }
+    }
+]

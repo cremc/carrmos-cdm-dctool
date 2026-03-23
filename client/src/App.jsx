@@ -14,6 +14,7 @@ import DataAnalyzer from './pages/DataAnalyzer';
 import UserManager from './pages/UserManager';
 import AccessManager from './pages/AccessManager';
 import Settings from './pages/Settings';
+import DataRelatePOC from './components/DataRelatePOC';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/user-manager" element={<UserManager />} />
                         <Route path="/access-manager" element={<AccessManager />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/data-relate-poc" element={<DataRelatePOC />} />
                     </Route>
                 </Route>
             </Routes>
